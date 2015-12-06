@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Main</title>
+    <link rel="stylesheet" href="css/styles.css"/>
+    <script src="js/jquery-2.1.4.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            var searchField = $('.search-field');
+            searchField.bind('focus',function(){
+                $('.loupe-image').css('display', 'none');
+            });
+            searchField.bind("focusout",function(){
+                $('.loupe-image').css('display', 'inline-block');
+            });
+        });
+    </script>
+</head>
+<body>
+
+<header>
+    <div class="header-content">
+        <div class="logo">
+            <img src="images/logo.png" alt="logo"/>
+        </div>
+        <nav>
+            <ul class="main-menu">
+                <li class="menu-main-home" ><a href="index.html">Главная</a></li>
+                <li class="menu-main-events">Мероприятия
+                    <ul class="menu-events sub-menu">
+                        <li class="menu-events-event1"><a href="event-statistics-table.html">Мероприятие 1</a></li>
+                        <li class="menu-events-event2"><a href="event-statistics-table.html">Мероприятие 2</a></li>
+                        <li class="menu-events-event3"><a href="event-statistics-table.html">Мероприятие 3</a></li>
+                    </ul>
+                </li>
+                <li class="menu-main-control">Управление
+                    <ul class="menu-control sub-menu">
+                        <li class="menu-control-users"><a href="control-users.html">Пользователи</a></li>
+                        <li class="menu-control-events"><a href="control-event.html">Мероприятие</a></li>
+                        <li class="menu-control-history"><a href="control-history.html">История изменений</a></li>
+                    </ul>
+                </li>
+                <li class="main-menu-account">Профиль</li>
+            </ul>
+        </nav>
+        <a class="log-in" href="authorization.html">Вход</a>
+    </div>
+</header>
+
+<div class="main-block">
+
+    <ul class="breadcrumbs">
+        <li><a href="index.html">Главная</a><span class="delimiter">&#8194;&#62;&#8194;</span></li>
+    </ul>
+
+    <div class="table-control">
+        <label class="select-filter-wrap">
+            <span class="select-title">Фильтр</span>
+            <span class="mark">&#9660;</span>
+            <select class="select-filter">
+                <option value="show-all" selected="selected">Все</option>
+                <option value="round-tables">По круглым столам</option>
+            </select>
+        </label>
+        <label class="select-period-wrap">
+            <span class="select-title">Период:</span>
+            <span class="mark">&#9660;</span>
+            <select class="select-period">
+                <option value="week" selected="selected">Неделя</option>
+                <option value="today">Сегодня</option>
+                <option value="month">Месяц</option>
+                <option value="all-time">Все время</option>
+            </select>
+        </label>
+        <label class="search-field-wrap">
+            <span class="field-title">Поиск:</span>
+            <span class="loupe-image"></span>
+            <input class="search-field" type="search"/>
+        </label>
+    </div>
+
+    <table class="events-table">
+        <tr>
+            <th></th>
+            <th>Название мероприятия</th>
+            <th>Дата проведения</th>
+            <th>Регистрация доступна</th>
+        </tr>
+        <tr>
+            <td><div class="bullhorn-image"></div></td>
+            <td>Данная система должна представлять собой платформу для сбора данных об участниках мероприятий,
+                которую они будут вводить на официальных сайтах мероприятия, подключенных к системе.</td>
+            <td>08-12 октября 2015 года</td>
+            <td><div class="circle-checkbox-image-active"></div></td>
+        </tr>
+        <tr>
+            <td><div class="bullhorn-image"></div></td>
+            <td>Данная система должна представлять собой платформу для сбора данных об участниках мероприятий,
+                которую они будут вводить на официальных сайтах мероприятия, подключенных к системе.</td>
+            <td>08-12 октября 2015 года</td>
+            <td><div class="circle-checkbox-image-active"></div></td>
+        </tr>
+        <tr>
+            <td><div class="bullhorn-image"></div></td>
+            <td>Данная система должна представлять собой платформу для сбора данных об участниках мероприятий,
+                которую они будут вводить на официальных сайтах мероприятия, подключенных к системе.</td>
+            <td>08-12 октября 2015 года</td>
+            <td><div class="circle-checkbox-image-unactive"></div></td>
+        </tr>
+        <tr>
+            <td><div class="bullhorn-image"></div></td>
+            <td>Данная система должна представлять собой платформу для сбора данных об участниках мероприятий,
+                которую они будут вводить на официальных сайтах мероприятия, подключенных к системе.</td>
+            <td>08-12 октября 2015 года</td>
+            <td><div class="circle-checkbox-image-active"></div></td>
+        </tr>
+        <tr>
+            <td><div class="bullhorn-image"></div></td>
+            <td>Данная система должна представлять собой платформу для сбора данных об участниках мероприятий,
+                которую они будут вводить на официальных сайтах мероприятия, подключенных к системе.</td>
+            <td>08-12 октября 2015 года</td>
+            <td><div class="circle-checkbox-image-unactive"></div></td>
+        </tr>
+        <tr>
+            <td><div class="bullhorn-image"></div></td>
+            <td>Данная система должна представлять собой платформу для сбора данных об участниках мероприятий,
+                которую они будут вводить на официальных сайтах мероприятия, подключенных к системе.</td>
+            <td>08-12 октября 2015 года</td>
+            <td><div class="circle-checkbox-image-unactive"></div></td>
+        </tr>
+    </table>
+</div>
+
+<footer></footer>
+
+</body>
+</html>

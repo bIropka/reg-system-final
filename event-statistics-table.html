@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Main</title>
+    <link rel="stylesheet" href="css/styles.css"/>
+    <script src="js/jquery-2.1.4.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            var searchField = $('.search-field');
+            searchField.bind('focus',function(){
+                $('.loupe-image').css('display', 'none');
+            });
+            searchField.bind("focusout",function(){
+                $('.loupe-image').css('display', 'inline-block');
+            });
+        });
+    </script>
+</head>
+<body>
+
+<header>
+    <div class="header-content">
+        <div class="logo">
+            <img src="images/logo.png" alt="logo"/>
+        </div>
+        <nav>
+            <ul class="main-menu">
+                <li class="menu-main-home" ><a href="index.html">Главная</a></li>
+                <li class="menu-main-events">Мероприятия
+                    <ul class="menu-events sub-menu">
+                        <li class="menu-events-event1"><a href="event-statistics-table.html">Мероприятие 1</a></li>
+                        <li class="menu-events-event2"><a href="event-statistics-table.html">Мероприятие 2</a></li>
+                        <li class="menu-events-event3"><a href="event-statistics-table.html">Мероприятие 3</a></li>
+                    </ul>
+                </li>
+                <li class="menu-main-control">Управление
+                    <ul class="menu-control sub-menu">
+                        <li class="menu-control-users"><a href="control-users.html">Пользователи</a></li>
+                        <li class="menu-control-events"><a href="control-event.html">Мероприятие</a></li>
+                        <li class="menu-control-history"><a href="control-history.html">История изменений</a></li>
+                    </ul>
+                </li>
+                <li class="main-menu-account">Профиль</li>
+            </ul>
+        </nav>
+        <a class="log-in" href="authorization.html">Вход</a>
+    </div>
+</header>
+
+<div class="main-block">
+
+    <ul class="breadcrumbs">
+        <li><a href="index.html">Главная</a><span class="delimiter">&#8194;&#62;&#8194;</span></li>
+        <li><a href="#">Мероприятие №1</a><span class="delimiter">&#8194;&#62;&#8194;</span></li>
+        <li><a href="#">Статистика</a><span class="delimiter">&#8194;&#62;&#8194;</span></li>
+        <li><a href="event-statistics-table.html">Таблица результатов</a><span class="delimiter">&#8194;&#62;&#8194;</span></li>
+    </ul>
+
+    <div class="event-menu">
+        <ul>
+            <li><a class="event-menu-choice" href="event-statistics-table.html" style="background: linear-gradient(to bottom, #fe8900, #c56c04);">Статистика</a></li>
+            <li><a class="event-menu-choice" href="event-participants.html">Участники</a></li>
+            <li><a class="event-menu-choice" href="event-mailing.html">Рассылка</a></li>
+            <li><a class="event-menu-choice" href="event-registration.html">Регистрация участников</a></li>
+            <li><a class="event-menu-choice" href="event-program.html">Программа</a></li>
+            <li class="event-control"><span class="event-menu-choice">Управление</span>
+                <ul class="sub-menu">
+                    <li class="event-control-hotels"><a href="event-control-hotels.html">Список гостиниц</a></li>
+                    <li class="event-control-users"><a href="event-control-users.html">Список пользователей</a></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+
+    <div class="table-control">
+        <label class="select-filter-wrap">
+            <span class="select-title">Фильтр</span>
+            <span class="mark">&#9660;</span>
+            <select class="select-filter">
+                <option value="show-all" selected="selected">Все</option>
+                <option value="round-tables">По круглым столам</option>
+            </select>
+        </label>
+        <label class="select-period-wrap">
+            <span class="select-title">Период:</span>
+            <span class="mark">&#9660;</span>
+            <select class="select-period">
+                <option value="week" selected="selected">По дням</option>
+                <option value="today">По неделям</option>
+                <option value="month">По месяцам</option>
+            </select>
+        </label>
+        <div class="statistics-menu-wrap">
+            <a class="download-image" href="example.file" download></a>
+            <span class="field-title">Вид:</span>
+            <a class="diagram-image" href="event-statistics-diagram.html" style="border: 2px solid transparent;"></a>
+            <a class="table-image" href="event-statistics-table.html" style="border: 2px solid #ff8a00;"></a>
+        </div>
+    </div>
+
+    <table class="event-statistics-table">
+        <tr>
+            <th>дата</th>
+            <th>новые</th>
+            <th>отклоненные</th>
+            <th>подтвержденные</th>
+            <th>всего</th>
+        </tr>
+        <tr>
+            <td>10.09.2015</td>
+            <td>1</td>
+            <td>3</td>
+            <td>4</td>
+            <td>8</td>
+        </tr>
+        <tr>
+            <td>10.09.2015</td>
+            <td>1</td>
+            <td>3</td>
+            <td>4</td>
+            <td>8</td>
+        </tr>
+        <tr>
+            <td>10.09.2015</td>
+            <td>1</td>
+            <td>3</td>
+            <td>4</td>
+            <td>8</td>
+        </tr>
+        <tr>
+            <td>10.09.2015</td>
+            <td>1</td>
+            <td>3</td>
+            <td>4</td>
+            <td>8</td>
+        </tr>
+        <tr>
+            <td>10.09.2015</td>
+            <td>1</td>
+            <td>3</td>
+            <td>4</td>
+            <td>8</td>
+        </tr>
+        <tr>
+            <td>10.09.2015</td>
+            <td>1</td>
+            <td>3</td>
+            <td>4</td>
+            <td>8</td>
+        </tr>
+        <tr>
+            <td>10.09.2015</td>
+            <td>1</td>
+            <td>3</td>
+            <td>4</td>
+            <td>8</td>
+        </tr>
+        <tr class="total-line">
+            <td>итого</td>
+            <td>45</td>
+            <td>235</td>
+            <td>479</td>
+            <td>1036</td>
+        </tr>
+    </table>
+
+</div>
+
+<footer></footer>
+
+</body>
+</html>

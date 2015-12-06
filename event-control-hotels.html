@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Event control hotels</title>
+    <link rel="stylesheet" href="css/styles.css"/>
+    <script src="js/jquery-2.1.4.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            /***********************************************************************/
+            $('.add-new-hotel').click(function () {
+                $('.window-add-hotel').fadeIn();
+            });
+            $('.window-add-hotel').click(function (event) {
+                $target = $(event.target);
+                if (!$target.closest($('.form-add-hotel')).length) $('.window-add-hotel').fadeOut();
+                if ($target.hasClass('close-window')) $('.window-add-hotel').fadeOut();
+            });
+            /***************************************************************************/
+            var searchField = $('.search-field');
+            searchField.bind('focus',function(){
+                $('.loupe-image').css('display', 'none');
+            });
+            searchField.bind("focusout",function(){
+                $('.loupe-image').css('display', 'inline-block');
+            });
+            /***************************************************************************/
+            $('.checkbox-field-wrap').bind('change', checkboxEvent);
+            function checkboxEvent() {
+                if($(this).find('.checkbox-field').prop('checked')){
+                    $(this).find('.checkbox-image-active').css('display', 'inline-block');
+                    $(this).find('.checkbox-image-unactive').css('display', 'none');
+                } else {
+                    $(this).find('.checkbox-image-active').css('display', 'none');
+                    $(this).find('.checkbox-image-unactive').css('display', 'inline-block');
+                }
+            }
+        });
+    </script>
+</head>
+<body>
+
+<header>
+    <div class="header-content">
+        <div class="logo">
+            <img src="images/logo.png" alt="logo"/>
+        </div>
+        <nav>
+            <ul class="main-menu">
+                <li class="menu-main-home" ><a href="index.html">Главная</a></li>
+                <li class="menu-main-events">Мероприятия
+                    <ul class="menu-events sub-menu">
+                        <li class="menu-events-event1"><a href="event-statistics-table.html">Мероприятие 1</a></li>
+                        <li class="menu-events-event2"><a href="event-statistics-table.html">Мероприятие 2</a></li>
+                        <li class="menu-events-event3"><a href="event-statistics-table.html">Мероприятие 3</a></li>
+                    </ul>
+                </li>
+                <li class="menu-main-control">Управление
+                    <ul class="menu-control sub-menu">
+                        <li class="menu-control-users"><a href="control-users.html">Пользователи</a></li>
+                        <li class="menu-control-events"><a href="control-event.html">Мероприятие</a></li>
+                        <li class="menu-control-history"><a href="control-history.html">История изменений</a></li>
+                    </ul>
+                </li>
+                <li class="main-menu-account">Профиль</li>
+            </ul>
+        </nav>
+        <a class="log-in" href="authorization.html">Вход</a>
+    </div>
+</header>
+
+<div class="main-block">
+
+    <ul class="breadcrumbs">
+        <li><a href="index.html">Главная</a><span class="delimiter">&#8194;&#62;&#8194;</span></li>
+        <li><a href="#">Мероприятие №1</a><span class="delimiter">&#8194;&#62;&#8194;</span></li>
+        <li><a href="#">Управление</a><span class="delimiter">&#8194;&#62;&#8194;</span></li>
+        <li><a href="event-control-hotels.html">Список гостиниц</a><span class="delimiter">&#8194;&#62;&#8194;</span></li>
+    </ul>
+
+    <div class="event-menu">
+        <ul>
+            <li><a class="event-menu-choice" href="event-statistics-table.html">Статистика</a></li>
+            <li><a class="event-menu-choice" href="event-participants.html">Участники</a></li>
+            <li><a class="event-menu-choice" href="event-mailing.html">Рассылка</a></li>
+            <li><a class="event-menu-choice" href="event-registration.html">Регистрация участников</a></li>
+            <li><a class="event-menu-choice" href="event-program.html">Программа</a></li>
+            <li class="event-control"><span class="event-menu-choice" style="background: linear-gradient(to bottom, #fe8900, #c56c04);">Управление</span>
+                <ul class="sub-menu">
+                    <li class="event-control-hotels"><a href="event-control-hotels.html">Список гостиниц</a></li>
+                    <li class="event-control-users"><a href="event-control-users.html">Список пользователей</a></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+
+    <div class="table-control event-big">
+        <label class="select-filter-wrap">
+            <span class="select-title">Фильтр</span>
+            <span class="mark">&#9660;</span>
+            <select class="select-filter">
+                <option value="show-all" selected="selected">Все</option>
+                <option value="round-tables">По круглым столам</option>
+            </select>
+        </label>
+        <label class="search-field-wrap">
+            <span class="field-title">Поиск:</span>
+            <span class="loupe-image"></span>
+            <input class="search-field" type="search"/>
+        </label>
+        <label class="select-period-wrap">
+            <span class="select-title">Период:</span>
+            <span class="mark">&#9660;</span>
+            <select class="select-period">
+                <option value="week" selected="selected">Неделя</option>
+                <option value="today">Сегодня</option>
+                <option value="month">Месяц</option>
+                <option value="all-time">Все время</option>
+            </select>
+        </label>
+    </div>
+
+    <form action="" class="control-hotels-form"  onsubmit="return false">
+        <div class="control-table-wrap">
+            <button class="add-new-hotel">добавить новую гостиницу&#8194;&#8194;&#8194;&#9660;</button>
+            <div class="event-block-title">Список гостиниц</div>
+            <div class="detail-image"></div>
+        </div>
+        <table class="control-hotels-table">
+
+            <tr>
+                <th>город</th>
+                <th>название гостиницы</th>
+                <th>адрес</th>
+                <th>типы номеров</th>
+            </tr>
+
+            <tr>
+                <td>
+                    <label>
+                        <textarea class="event-field" cols="" rows="2">Тольятти</textarea>
+                    </label>
+                </td>
+                <td>
+                    <label>
+                        <textarea class="event-field" cols="" rows="2">"Прибрежная"</textarea>
+                    </label>
+                </td>
+                <td>
+                    <label>
+                        <textarea class="event-field" cols="" rows="2">пр. Самарский, 24</textarea>
+                    </label>
+                </td>
+                <td>
+                    <label class="select-room-wrap">
+                        <span class="mark">&#9660;</span>
+                        <select class="select-room event-field">
+                            <option value="event" selected="selected">одноместный</option>
+                            <option value="round-table">двухместный</option>
+                            <option value="round-table">эконом</option>
+                            <option value="round-table">бизнес</option>
+                            <option value="round-table">люкс</option>
+                            <option value="round-table">полулюкс</option>
+                        </select>
+                    </label>
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    <label>
+                        <textarea class="event-field" cols="" rows="2">Тольятти</textarea>
+                    </label>
+                </td>
+                <td>
+                    <label>
+                        <textarea class="event-field" cols="" rows="2">"Прибрежная"</textarea>
+                    </label>
+                </td>
+                <td>
+                    <label>
+                        <textarea class="event-field" cols="" rows="2">пр. Самарский, 24</textarea>
+                    </label>
+                </td>
+                <td>
+                    <label class="select-room-wrap">
+                        <span class="mark">&#9660;</span>
+                        <select class="select-room event-field">
+                            <option value="event" selected="selected">одноместный</option>
+                            <option value="round-table">двухместный</option>
+                            <option value="round-table">эконом</option>
+                            <option value="round-table">бизнес</option>
+                            <option value="round-table">люкс</option>
+                            <option value="round-table">полулюкс</option>
+                        </select>
+                    </label>
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    <label>
+                        <textarea class="event-field" cols="" rows="2">Тольятти</textarea>
+                    </label>
+                </td>
+                <td>
+                    <label>
+                        <textarea class="event-field" cols="" rows="2">"Прибрежная"</textarea>
+                    </label>
+                </td>
+                <td>
+                    <label>
+                        <textarea class="event-field" cols="" rows="2">пр. Самарский, 24</textarea>
+                    </label>
+                </td>
+                <td>
+                    <label class="select-room-wrap">
+                        <span class="mark">&#9660;</span>
+                        <select class="select-room event-field">
+                            <option value="event" selected="selected">одноместный</option>
+                            <option value="round-table">двухместный</option>
+                            <option value="round-table">эконом</option>
+                            <option value="round-table">бизнес</option>
+                            <option value="round-table">люкс</option>
+                            <option value="round-table">полулюкс</option>
+                        </select>
+                    </label>
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    <label>
+                        <textarea class="event-field" cols="" rows="2">Тольятти</textarea>
+                    </label>
+                </td>
+                <td>
+                    <label>
+                        <textarea class="event-field" cols="" rows="2">"Прибрежная"</textarea>
+                    </label>
+                </td>
+                <td>
+                    <label>
+                        <textarea class="event-field" cols="" rows="2">пр. Самарский, 24</textarea>
+                    </label>
+                </td>
+                <td>
+                    <label class="select-room-wrap">
+                        <span class="mark">&#9660;</span>
+                        <select class="select-room event-field">
+                            <option value="event" selected="selected">одноместный</option>
+                            <option value="round-table">двухместный</option>
+                            <option value="round-table">эконом</option>
+                            <option value="round-table">бизнес</option>
+                            <option value="round-table">люкс</option>
+                            <option value="round-table">полулюкс</option>
+                        </select>
+                    </label>
+                </td>
+            </tr>
+
+        </table>
+        <input type="submit" class="submit-field" value="сохранить"/>
+    </form>
+
+    <div class="window-add-hotel">
+        <form action="#" class="form-add-hotel">
+            <div class="form-title">
+                <span class="title">Добавить новую гостиницу</span>
+                <span class="close-window">&#10006;</span>
+            </div>
+            <label class="field-wrap">
+                <span class="field-title">Город</span>
+                <input class="field" type="text"/>
+            </label>
+            <label class="field-wrap">
+                <span class="field-title">Название гостиницы</span>
+                <input class="field" type="text"/>
+            </label>
+            <label class="field-wrap">
+                <span class="field-title">Адрес</span>
+                <input class="field" type="text"/>
+            </label>
+            <span class="checkbox-block-title">Типы номеров</span>
+            <label class="checkbox-field-wrap">
+                <span class="checkbox-image-active" style="display: none"></span>
+                <span class="checkbox-image-unactive"></span>
+                <input class="checkbox-field" type="checkbox"/>
+                <span class="checkbox-name">одноместный стандарт</span>
+            </label>
+            <label class="checkbox-field-wrap">
+                <span class="checkbox-image-active" style="display: none"></span>
+                <span class="checkbox-image-unactive"></span>
+                <input class="checkbox-field" type="checkbox"/>
+                <span class="checkbox-name">двухместный стандарт</span>
+            </label>
+            <label class="checkbox-field-wrap">
+                <span class="checkbox-image-active" style="display: none"></span>
+                <span class="checkbox-image-unactive"></span>
+                <input class="checkbox-field" type="checkbox"/>
+                <span class="checkbox-name">эконом</span>
+            </label>
+            <label class="checkbox-field-wrap">
+                <span class="checkbox-image-active" style="display: none"></span>
+                <span class="checkbox-image-unactive"></span>
+                <input class="checkbox-field" type="checkbox"/>
+                <span class="checkbox-name">бизнес</span>
+            </label>
+            <label class="checkbox-field-wrap">
+                <span class="checkbox-image-active" style="display: none"></span>
+                <span class="checkbox-image-unactive"></span>
+                <input class="checkbox-field" type="checkbox"/>
+                <span class="checkbox-name">люкс</span>
+            </label>
+            <label class="checkbox-field-wrap">
+                <span class="checkbox-image-active" style="display: none"></span>
+                <span class="checkbox-image-unactive"></span>
+                <input class="checkbox-field" type="checkbox"/>
+                <span class="checkbox-name">полулюкс</span>
+            </label>
+            <label class="submit-field-wrap">
+                <input class="submit-field" type="submit" value="Добавить"/>
+            </label>
+        </form>
+    </div>
+
+</div>
+
+<footer></footer>
+
+</body>
+</html>

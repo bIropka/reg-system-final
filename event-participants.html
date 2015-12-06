@@ -1,0 +1,1011 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Event-participants</title>
+    <link href="css/jquery-ui.min.css" rel="stylesheet">
+    <link href="css/styles.css" rel="stylesheet">
+    <script src="js/jquery-2.1.4.min.js"></script>
+    <script src="js/jquery-ui.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            var searchField = $('.search-field');
+            searchField.bind('focus',function(){
+                $('.loupe-image').css('display', 'none');
+            });
+            searchField.bind("focusout",function(){
+                $('.loupe-image').css('display', 'inline-block');
+            });
+
+            var checkboxWrap = $('.checkbox-field-wrap');
+            var mainCheckbox = $('.main-checkbox');
+            /********************************************************************************/
+            checkboxWrap.bind('change', checkboxEvent);
+            function checkboxEvent() {
+                if($(this).find('.checkbox-field').prop('checked')){
+                    $(this).find('.checkbox-image-active').css('display', 'inline-block');
+                    $(this).find('.checkbox-image-unactive').css('display', 'none');
+                } else {
+                    $(this).find('.checkbox-image-active').css('display', 'none');
+                    $(this).find('.checkbox-image-unactive').css('display', 'inline-block');
+                }
+            }
+            /********************************************************************************/
+            mainCheckbox.bind('change', mainCheckboxEvent);
+            function mainCheckboxEvent() {
+                if($(this).find('.checkbox-field').prop('checked')){
+                    $(this).parents('table').find('.checkbox-image-active').css('display', 'inline-block');
+                    $(this).parents('table').find('.checkbox-image-unactive').css('display', 'none');
+                    $(this).parents('table').find('.checkbox-field').prop('checked', true);
+
+                } else {
+                    $(this).parents('table').find('.checkbox-image-active').css('display', 'none');
+                    $(this).parents('table').find('.checkbox-image-unactive').css('display', 'inline-block');
+                    $(this).parents('table').find('.checkbox-field').prop('checked', false);
+                }
+            }
+            /********************************************************************************/
+            $(".calendar").datepicker({
+                dayNamesMin: ['ВС', 'ПН', 'ВТ', 'СР', 'ЧТ', 'ПТ', 'СБ'],
+                monthNames: ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'],
+                dateFormat: "dd-mm-yy",
+                maxDate: "+1y",
+                changeMonth: false
+            });
+            /***************************************************************************/
+            $('.note-image').click(function(){
+                if($(this).hasClass('.active')){
+                    $(this).removeClass('.active');
+                    $(this).parents('tr').find('.event-field').prop('disabled', true).css('border', '1px solid transparent');
+                    $(this).css('border', '1px solid transparent');
+                } else {
+                    $(this).addClass('.active');
+                    $(this).parents('tr').find('.event-field').prop('disabled', false).css('border', '1px solid #ff8a00');
+                    $(this).css('border', '1px solid #ff8a00');
+                }
+            });
+            /***********************************************************************/
+            $('.detail-image').click(function () {
+                $('.window-choose-fields').fadeIn();
+            });
+            $('.window-choose-fields').click(function (event) {
+                $target = $(event.target);
+                if (!$target.closest($('.form-choose-fields')).length) $('.window-choose-fields').fadeOut();
+                if ($target.hasClass('close-window')) $('.window-choose-fields').fadeOut();
+            });
+        });
+    </script>
+</head>
+<body>
+
+<header>
+    <div class="header-content">
+        <div class="logo">
+            <img src="images/logo.png" alt="logo"/>
+        </div>
+        <nav>
+            <ul class="main-menu">
+                <li class="menu-main-home" ><a href="index.html">Главная</a></li>
+                <li class="menu-main-events">Мероприятия
+                    <ul class="menu-events sub-menu">
+                        <li class="menu-events-event1"><a href="event-statistics-table.html">Мероприятие 1</a></li>
+                        <li class="menu-events-event2"><a href="event-statistics-table.html">Мероприятие 2</a></li>
+                        <li class="menu-events-event3"><a href="event-statistics-table.html">Мероприятие 3</a></li>
+                    </ul>
+                </li>
+                <li class="menu-main-control">Управление
+                    <ul class="menu-control sub-menu">
+                        <li class="menu-control-users"><a href="control-users.html">Пользователи</a></li>
+                        <li class="menu-control-events"><a href="control-event.html">Мероприятие</a></li>
+                        <li class="menu-control-history"><a href="control-history.html">История изменений</a></li>
+                    </ul>
+                </li>
+                <li class="main-menu-account">Профиль</li>
+            </ul>
+        </nav>
+        <a class="log-in" href="authorization.html">Вход</a>
+    </div>
+</header>
+
+<div class="main-block">
+
+    <ul class="breadcrumbs">
+        <li><a href="index.html">Главная</a><span class="delimiter">&#8194;&#62;&#8194;</span></li>
+        <li><a href="#">Мероприятие №1</a><span class="delimiter">&#8194;&#62;&#8194;</span></li>
+        <li><a href="event-participants.html">Участники</a><span class="delimiter">&#8194;&#62;&#8194;</span></li>
+    </ul>
+
+    <div class="event-menu">
+        <ul>
+            <li><a class="event-menu-choice" href="event-statistics-table.html">Статистика</a></li>
+            <li><a class="event-menu-choice" href="event-participants.html" style="background: linear-gradient(to bottom, #fe8900, #c56c04);">Участники</a></li>
+            <li><a class="event-menu-choice" href="event-mailing.html">Рассылка</a></li>
+            <li><a class="event-menu-choice" href="event-registration.html">Регистрация участников</a></li>
+            <li><a class="event-menu-choice" href="event-program.html">Программа</a></li>
+            <li class="event-control"><span class="event-menu-choice">Управление</span>
+                <ul class="sub-menu">
+                    <li class="event-control-hotels"><a href="event-control-hotels.html">Список гостиниц</a></li>
+                    <li class="event-control-users"><a href="event-control-users.html">Список пользователей</a></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+
+    <div class="table-control event-big">
+        <label class="select-filter-wrap">
+            <span class="select-title">Фильтр</span>
+            <span class="mark">&#9660;</span>
+            <select class="select-filter">
+                <option value="show-all" selected="selected">Все</option>
+                <option value="round-tables">По круглым столам</option>
+            </select>
+        </label>
+        <label class="search-field-wrap">
+            <span class="field-title">Поиск:</span>
+            <span class="loupe-image"></span>
+            <input class="search-field" type="search"/>
+        </label>
+        <label class="select-period-wrap">
+            <span class="select-title">Период:</span>
+            <span class="mark">&#9660;</span>
+            <select class="select-period">
+                <option value="week" selected="selected">Неделя</option>
+                <option value="today">Сегодня</option>
+                <option value="month">Месяц</option>
+                <option value="all-time">Все время</option>
+            </select>
+        </label>
+        <a class="download-image" href="example.file" download></a>
+    </div>
+
+    <form action="#" class="event-big-form" style="width: 2700px">
+
+        <div class="event-big-table-wrap">
+
+            <div class="event-block-title">
+                <span>данные за весь период:</span>
+                <span class="value-block"><span class="value">&#8194;349 </span>ответов</span>
+
+                <div class="detail-image"></div>
+            </div>
+
+            <table class="event-big-table">
+                <tr>
+                    <th>
+                        <label class="checkbox-field-wrap main-checkbox">
+                            <span class="checkbox-image-active" style="display: none"></span>
+                            <span class="checkbox-image-unactive"></span>
+                            <input class="checkbox-field" type="checkbox"/>
+                        </label>
+                    </th>
+                    <th>действия</th>
+                    <th>номер</th>
+                    <th>фио</th>
+                    <th>организация</th>
+                    <th>должность</th>
+                    <th>email</th>
+                    <th>телефон<br>мобильный</th>
+                    <th>гостиница</th>
+                    <th>мероприятие</th>
+                    <th>статус <span style="text-decoration: underline">sms</span><br>уведомления</th>
+                    <th>статус <span style="text-decoration: underline">email</span><br>уведомления</th>
+                    <th>категория<br>участника</th>
+                    <th>дата<br>прибытия</th>
+                    <th>дата<br>убытия</th>
+                    <th>информация<br>по трансферу</th>
+                    <th>примечания<br>оператора<br>регистратора</th>
+                    <th>примечания<br>оператора<br>деловой части</th>
+                    <th>статус<br>расселения</th>
+                    <th>время и дата<br>регистрации</th>
+                    <th>статус<br>регистрации</th>
+                </tr>
+
+                <tr>
+                    <td>
+                        <div style="height:1px;opacity: 0;"></div>
+                        <label class="checkbox-field-wrap">
+                            <span class="checkbox-image-active" style="display: none"></span>
+                            <span class="checkbox-image-unactive"></span>
+                            <input class="checkbox-field" type="checkbox"/>
+                        </label>
+                    </td>
+                    <td>
+                        <ul>
+                            <li class="note-image"></li>
+                            <li class="print-image"></li>
+                        </ul>
+                    </td>
+                    <td>
+                        <label>
+                            <textarea class="event-field" cols="" rows="3" disabled>1001</textarea>
+                        </label></td>
+                    <td>
+                        <label>
+                            <textarea class="event-field" cols="" rows="3" disabled>Тимонин Андрей Сергеевич</textarea>
+                        </label>
+                    </td>
+                    <td>
+                        <label>
+                            <textarea class="event-field" cols="" rows="3" disabled>Applus IDIADA Group</textarea>
+                        </label>
+                    </td>
+                    <td>
+                        <label>
+                            <textarea class="event-field" cols="" rows="3" disabled>директор представительства Applus IDIADA в России</textarea>
+                        </label>
+                    </td>
+                    <td>
+                        <label>
+                            <textarea class="event-field" cols="" rows="3" disabled></textarea>
+                        </label>
+                    </td>
+                    <td>
+                        <label>
+                            <textarea class="event-field" cols="" rows="3" disabled>+7(902)234-45-67</textarea>
+                        </label>
+                    </td>
+                    <td>
+                        <label>
+                            <textarea class="event-field" cols="" rows="3" disabled>г. Самара, пр. Куйбышева, 34, номер 235</textarea>
+                        </label>
+                    </td>
+                    <td>
+                        <label class="select-event-wrap">
+                            <span class="mark">&#9660;</span>
+                            <select class="select-event event-field" disabled>
+                                <option value="event" selected="selected">мероприятие</option>
+                                <option value="round-table">круглый стол</option>
+                            </select>
+                        </label>
+                    </td>
+                    <td>
+                        <span class="checkbox-alternative-active"></span>
+                        <span class="date">04.10.2015</span>
+                        <span class="time">15:45</span>
+                    </td>
+                    <td>
+                        <span class="checkbox-alternative-unactive"></span>
+                        <span class="date"></span>
+                        <span class="time"></span>
+                    </td>
+                    <td>
+                        <label class="select-participant-wrap">
+                            <span class="mark">&#9660;</span>
+                            <select class="select-participant event-field" disabled>
+                                <option value="moderator" selected="selected">модератор</option>
+                                <option value="speaker">спикер</option>
+                                <option value="trainer">выступающий</option>
+                                <option value="vip">VIP</option>
+                                <option value="participant">участник</option>
+                            </select>
+                        </label>
+                    </td>
+                    <td>
+                        <label>
+                            <input class="event-field calendar" type="text" disabled/>
+                        </label>
+                    </td>
+                    <td>
+                        <label>
+                            <input class="event-field calendar" type="text" disabled/>
+                        </label>
+                    </td>
+                    <td>
+                        <label class="select-transport-wrap">
+                            <span class="mark">&#9660;</span>
+                            <select class="select-transport event-field" disabled>
+                                <option value="train" selected="selected">поезд</option>
+                                <option value="airplane">самолет</option>
+                                <option value="train">поезд</option>
+                                <option value="voyage">рейс</option>
+                            </select>
+                        </label>
+                    </td>
+                    <td>
+                        <label>
+                            <textarea class="event-field" cols="" rows="5" disabled>административный ассистент генерального директора и HR ассистента</textarea>
+                        </label>
+                    </td>
+                    <td>
+                        <label>
+                            <textarea class="event-field" cols="" rows="5" disabled></textarea>
+                        </label>
+                    </td>
+                    <td>
+                        <label class="select-location-wrap">
+                            <span class="mark">&#9660;</span>
+                            <select class="select-location event-field" disabled>
+                                <option value="reservation" selected="selected">бронь</option>
+                                <option value="no-reservation">нет</option>
+                                <option value="in-work">в работе</option>
+                            </select>
+                        </label>
+                    </td>
+                    <td><div style="height:1px;opacity: 0;"></div></td>
+                    <td>
+                        <label class="select-status-wrap">
+                            <span class="mark">&#9660;</span>
+                            <select class="select-status event-field" disabled>
+                                <option value="verified" selected="selected">подтвержденный</option>
+                                <option value="no-verified">отклоненный</option>
+                                <option value="new">новый</option>
+                            </select>
+                        </label>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <div style="height:1px;opacity: 0;"></div>
+                        <label class="checkbox-field-wrap">
+                            <span class="checkbox-image-active" style="display: none"></span>
+                            <span class="checkbox-image-unactive"></span>
+                            <input class="checkbox-field" type="checkbox"/>
+                        </label>
+                    </td>
+                    <td>
+                        <ul>
+                            <li class="note-image"></li>
+                            <li class="print-image"></li>
+                        </ul>
+                    </td>
+                    <td>
+                        <label>
+                            <textarea class="event-field" cols="" rows="3" disabled>1001</textarea>
+                        </label></td>
+                    <td>
+                        <label>
+                            <textarea class="event-field" cols="" rows="3" disabled>Тимонин Андрей Сергеевич</textarea>
+                        </label>
+                    </td>
+                    <td>
+                        <label>
+                            <textarea class="event-field" cols="" rows="3" disabled>Applus IDIADA Group</textarea>
+                        </label>
+                    </td>
+                    <td>
+                        <label>
+                            <textarea class="event-field" cols="" rows="3" disabled>директор представительства Applus IDIADA в России</textarea>
+                        </label>
+                    </td>
+                    <td>
+                        <label>
+                            <textarea class="event-field" cols="" rows="3" disabled></textarea>
+                        </label>
+                    </td>
+                    <td>
+                        <label>
+                            <textarea class="event-field" cols="" rows="3" disabled>+7(902)234-45-67</textarea>
+                        </label>
+                    </td>
+                    <td>
+                        <label>
+                            <textarea class="event-field" cols="" rows="3" disabled>г. Самара, пр. Куйбышева, 34, номер 235</textarea>
+                        </label>
+                    </td>
+                    <td>
+                        <label class="select-event-wrap">
+                            <span class="mark">&#9660;</span>
+                            <select class="select-event event-field" disabled>
+                                <option value="event" selected="selected">мероприятие</option>
+                                <option value="round-table">круглый стол</option>
+                            </select>
+                        </label>
+                    </td>
+                    <td>
+                        <span class="checkbox-alternative-active"></span>
+                        <span class="date">04.10.2015</span>
+                        <span class="time">15:45</span>
+                    </td>
+                    <td>
+                        <span class="checkbox-alternative-unactive"></span>
+                        <span class="date"></span>
+                        <span class="time"></span>
+                    </td>
+                    <td>
+                        <label class="select-participant-wrap">
+                            <span class="mark">&#9660;</span>
+                            <select class="select-participant event-field" disabled>
+                                <option value="moderator" selected="selected">модератор</option>
+                                <option value="speaker">спикер</option>
+                                <option value="trainer">выступающий</option>
+                                <option value="vip">VIP</option>
+                                <option value="participant">участник</option>
+                            </select>
+                        </label>
+                    </td>
+                    <td>
+                        <label>
+                            <input class="event-field calendar" type="text" disabled/>
+                        </label>
+                    </td>
+                    <td>
+                        <label>
+                            <input class="event-field calendar" type="text" disabled/>
+                        </label>
+                    </td>
+                    <td>
+                        <label class="select-transport-wrap">
+                            <span class="mark">&#9660;</span>
+                            <select class="select-transport event-field" disabled>
+                                <option value="train" selected="selected">поезд</option>
+                                <option value="airplane">самолет</option>
+                                <option value="train">поезд</option>
+                                <option value="voyage">рейс</option>
+                            </select>
+                        </label>
+                    </td>
+                    <td>
+                        <label>
+                            <textarea class="event-field" cols="" rows="5" disabled>административный ассистент генерального директора и HR ассистента</textarea>
+                        </label>
+                    </td>
+                    <td>
+                        <label>
+                            <textarea class="event-field" cols="" rows="5" disabled></textarea>
+                        </label>
+                    </td>
+                    <td>
+                        <label class="select-location-wrap">
+                            <span class="mark">&#9660;</span>
+                            <select class="select-location event-field" disabled>
+                                <option value="reservation" selected="selected">бронь</option>
+                                <option value="no-reservation">нет</option>
+                                <option value="in-work">в работе</option>
+                            </select>
+                        </label>
+                    </td>
+                    <td><div style="height:1px;opacity: 0;"></div></td>
+                    <td>
+                        <label class="select-status-wrap">
+                            <span class="mark">&#9660;</span>
+                            <select class="select-status event-field" disabled>
+                                <option value="verified" selected="selected">подтвержденный</option>
+                                <option value="no-verified">отклоненный</option>
+                                <option value="new">новый</option>
+                            </select>
+                        </label>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <div style="height:1px;opacity: 0;"></div>
+                        <label class="checkbox-field-wrap">
+                            <span class="checkbox-image-active" style="display: none"></span>
+                            <span class="checkbox-image-unactive"></span>
+                            <input class="checkbox-field" type="checkbox"/>
+                        </label>
+                    </td>
+                    <td>
+                        <ul>
+                            <li class="note-image"></li>
+                            <li class="print-image"></li>
+                        </ul>
+                    </td>
+                    <td>
+                        <label>
+                            <textarea class="event-field" cols="" rows="3" disabled>1001</textarea>
+                        </label></td>
+                    <td>
+                        <label>
+                            <textarea class="event-field" cols="" rows="3" disabled>Тимонин Андрей Сергеевич</textarea>
+                        </label>
+                    </td>
+                    <td>
+                        <label>
+                            <textarea class="event-field" cols="" rows="3" disabled>Applus IDIADA Group</textarea>
+                        </label>
+                    </td>
+                    <td>
+                        <label>
+                            <textarea class="event-field" cols="" rows="3" disabled>директор представительства Applus IDIADA в России</textarea>
+                        </label>
+                    </td>
+                    <td>
+                        <label>
+                            <textarea class="event-field" cols="" rows="3" disabled></textarea>
+                        </label>
+                    </td>
+                    <td>
+                        <label>
+                            <textarea class="event-field" cols="" rows="3" disabled>+7(902)234-45-67</textarea>
+                        </label>
+                    </td>
+                    <td>
+                        <label>
+                            <textarea class="event-field" cols="" rows="3" disabled>г. Самара, пр. Куйбышева, 34, номер 235</textarea>
+                        </label>
+                    </td>
+                    <td>
+                        <label class="select-event-wrap">
+                            <span class="mark">&#9660;</span>
+                            <select class="select-event event-field" disabled>
+                                <option value="event" selected="selected">мероприятие</option>
+                                <option value="round-table">круглый стол</option>
+                            </select>
+                        </label>
+                    </td>
+                    <td>
+                        <span class="checkbox-alternative-active"></span>
+                        <span class="date">04.10.2015</span>
+                        <span class="time">15:45</span>
+                    </td>
+                    <td>
+                        <span class="checkbox-alternative-unactive"></span>
+                        <span class="date"></span>
+                        <span class="time"></span>
+                    </td>
+                    <td>
+                        <label class="select-participant-wrap">
+                            <span class="mark">&#9660;</span>
+                            <select class="select-participant event-field" disabled>
+                                <option value="moderator" selected="selected">модератор</option>
+                                <option value="speaker">спикер</option>
+                                <option value="trainer">выступающий</option>
+                                <option value="vip">VIP</option>
+                                <option value="participant">участник</option>
+                            </select>
+                        </label>
+                    </td>
+                    <td>
+                        <label>
+                            <input class="event-field calendar" type="text" disabled/>
+                        </label>
+                    </td>
+                    <td>
+                        <label>
+                            <input class="event-field calendar" type="text" disabled/>
+                        </label>
+                    </td>
+                    <td>
+                        <label class="select-transport-wrap">
+                            <span class="mark">&#9660;</span>
+                            <select class="select-transport event-field" disabled>
+                                <option value="train" selected="selected">поезд</option>
+                                <option value="airplane">самолет</option>
+                                <option value="train">поезд</option>
+                                <option value="voyage">рейс</option>
+                            </select>
+                        </label>
+                    </td>
+                    <td>
+                        <label>
+                            <textarea class="event-field" cols="" rows="5" disabled>административный ассистент генерального директора и HR ассистента</textarea>
+                        </label>
+                    </td>
+                    <td>
+                        <label>
+                            <textarea class="event-field" cols="" rows="5" disabled></textarea>
+                        </label>
+                    </td>
+                    <td>
+                        <label class="select-location-wrap">
+                            <span class="mark">&#9660;</span>
+                            <select class="select-location event-field" disabled>
+                                <option value="reservation" selected="selected">бронь</option>
+                                <option value="no-reservation">нет</option>
+                                <option value="in-work">в работе</option>
+                            </select>
+                        </label>
+                    </td>
+                    <td><div style="height:1px;opacity: 0;"></div></td>
+                    <td>
+                        <label class="select-status-wrap">
+                            <span class="mark">&#9660;</span>
+                            <select class="select-status event-field" disabled>
+                                <option value="verified" selected="selected">подтвержденный</option>
+                                <option value="no-verified">отклоненный</option>
+                                <option value="new">новый</option>
+                            </select>
+                        </label>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <div style="height:1px;opacity: 0;"></div>
+                        <label class="checkbox-field-wrap">
+                            <span class="checkbox-image-active" style="display: none"></span>
+                            <span class="checkbox-image-unactive"></span>
+                            <input class="checkbox-field" type="checkbox"/>
+                        </label>
+                    </td>
+                    <td>
+                        <ul>
+                            <li class="note-image"></li>
+                            <li class="print-image"></li>
+                        </ul>
+                    </td>
+                    <td>
+                        <label>
+                            <textarea class="event-field" cols="" rows="3" disabled>1001</textarea>
+                        </label></td>
+                    <td>
+                        <label>
+                            <textarea class="event-field" cols="" rows="3" disabled>Тимонин Андрей Сергеевич</textarea>
+                        </label>
+                    </td>
+                    <td>
+                        <label>
+                            <textarea class="event-field" cols="" rows="3" disabled>Applus IDIADA Group</textarea>
+                        </label>
+                    </td>
+                    <td>
+                        <label>
+                            <textarea class="event-field" cols="" rows="3" disabled>директор представительства Applus IDIADA в России</textarea>
+                        </label>
+                    </td>
+                    <td>
+                        <label>
+                            <textarea class="event-field" cols="" rows="3" disabled></textarea>
+                        </label>
+                    </td>
+                    <td>
+                        <label>
+                            <textarea class="event-field" cols="" rows="3" disabled>+7(902)234-45-67</textarea>
+                        </label>
+                    </td>
+                    <td>
+                        <label>
+                            <textarea class="event-field" cols="" rows="3" disabled>г. Самара, пр. Куйбышева, 34, номер 235</textarea>
+                        </label>
+                    </td>
+                    <td>
+                        <label class="select-event-wrap">
+                            <span class="mark">&#9660;</span>
+                            <select class="select-event event-field" disabled>
+                                <option value="event" selected="selected">мероприятие</option>
+                                <option value="round-table">круглый стол</option>
+                            </select>
+                        </label>
+                    </td>
+                    <td>
+                        <span class="checkbox-alternative-active"></span>
+                        <span class="date">04.10.2015</span>
+                        <span class="time">15:45</span>
+                    </td>
+                    <td>
+                        <span class="checkbox-alternative-unactive"></span>
+                        <span class="date"></span>
+                        <span class="time"></span>
+                    </td>
+                    <td>
+                        <label class="select-participant-wrap">
+                            <span class="mark">&#9660;</span>
+                            <select class="select-participant event-field" disabled>
+                                <option value="moderator" selected="selected">модератор</option>
+                                <option value="speaker">спикер</option>
+                                <option value="trainer">выступающий</option>
+                                <option value="vip">VIP</option>
+                                <option value="participant">участник</option>
+                            </select>
+                        </label>
+                    </td>
+                    <td>
+                        <label>
+                            <input class="event-field calendar" type="text" disabled/>
+                        </label>
+                    </td>
+                    <td>
+                        <label>
+                            <input class="event-field calendar" type="text" disabled/>
+                        </label>
+                    </td>
+                    <td>
+                        <label class="select-transport-wrap">
+                            <span class="mark">&#9660;</span>
+                            <select class="select-transport event-field" disabled>
+                                <option value="train" selected="selected">поезд</option>
+                                <option value="airplane">самолет</option>
+                                <option value="train">поезд</option>
+                                <option value="voyage">рейс</option>
+                            </select>
+                        </label>
+                    </td>
+                    <td>
+                        <label>
+                            <textarea class="event-field" cols="" rows="5" disabled>административный ассистент генерального директора и HR ассистента</textarea>
+                        </label>
+                    </td>
+                    <td>
+                        <label>
+                            <textarea class="event-field" cols="" rows="5" disabled></textarea>
+                        </label>
+                    </td>
+                    <td>
+                        <label class="select-location-wrap">
+                            <span class="mark">&#9660;</span>
+                            <select class="select-location event-field" disabled>
+                                <option value="reservation" selected="selected">бронь</option>
+                                <option value="no-reservation">нет</option>
+                                <option value="in-work">в работе</option>
+                            </select>
+                        </label>
+                    </td>
+                    <td><div style="height:1px;opacity: 0;"></div></td>
+                    <td>
+                        <label class="select-status-wrap">
+                            <span class="mark">&#9660;</span>
+                            <select class="select-status event-field" disabled>
+                                <option value="verified" selected="selected">подтвержденный</option>
+                                <option value="no-verified">отклоненный</option>
+                                <option value="new">новый</option>
+                            </select>
+                        </label>
+                    </td>
+                </tr>
+
+            </table>
+
+        </div>
+
+        <div class="big-control-wrap">
+            <div class="big-control">
+                <label class="select-action-wrap">
+                    <span class="mark">&#9660;</span>
+                    <select class="select-action">
+                        <option value="action" selected="selected">-- Действие --</option>
+                        <option value="delete">Удалить</option>
+                        <option value="print">Печатать</option>
+                    </select>
+                </label>
+                <label><input class="to-apply" type="submit" value="выполнить"/></label>
+                <ul class="page-numbers">
+                    <li>1</li>
+                    <li>2</li>
+                    <li>3</li>
+                    <li>4</li>
+                    <li>5</li>
+                    <li>6</li>
+                    <li>Следующая</li>
+                </ul>
+            </div>
+        </div>
+    </form>
+
+    <div class="window-choose-fields">
+        <form action="#" class="form-choose-fields">
+            <div class="form-title">
+                <span class="title">Показать поля</span>
+                <span class="close-window">&#10006;</span>
+            </div>
+            <table class="fields-table">
+                <tr>
+                    <th>
+                        <label class="checkbox-field-wrap main-checkbox">
+                            <span class="checkbox-image-active"></span>
+                            <span class="checkbox-image-unactive" style="display: none"></span>
+                            <input class="checkbox-field" type="checkbox" checked/>
+                        </label>
+                    </th>
+                    <th>элемент</th>
+                </tr>
+
+                <tr>
+                    <td>
+                        <label class="checkbox-field-wrap">
+                            <span class="checkbox-image-active"></span>
+                            <span class="checkbox-image-unactive" style="display: none"></span>
+                            <input class="checkbox-field" type="checkbox" checked/>
+                        </label>
+                    </td>
+                    <td>Номер</td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <label class="checkbox-field-wrap">
+                            <span class="checkbox-image-active"></span>
+                            <span class="checkbox-image-unactive" style="display: none"></span>
+                            <input class="checkbox-field" type="checkbox" checked/>
+                        </label>
+                    </td>
+                    <td>ФИО</td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <label class="checkbox-field-wrap">
+                            <span class="checkbox-image-active"></span>
+                            <span class="checkbox-image-unactive" style="display: none"></span>
+                            <input class="checkbox-field" type="checkbox" checked/>
+                        </label>
+                    </td>
+                    <td>Организация</td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <label class="checkbox-field-wrap">
+                            <span class="checkbox-image-active"></span>
+                            <span class="checkbox-image-unactive" style="display: none"></span>
+                            <input class="checkbox-field" type="checkbox" checked/>
+                        </label>
+                    </td>
+                    <td>Должность</td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <label class="checkbox-field-wrap">
+                            <span class="checkbox-image-active"></span>
+                            <span class="checkbox-image-unactive" style="display: none"></span>
+                            <input class="checkbox-field" type="checkbox" checked/>
+                        </label>
+                    </td>
+                    <td>E-mail</td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <label class="checkbox-field-wrap">
+                            <span class="checkbox-image-active"></span>
+                            <span class="checkbox-image-unactive" style="display: none"></span>
+                            <input class="checkbox-field" type="checkbox" checked/>
+                        </label>
+                    </td>
+                    <td>Телефон мобильный</td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <label class="checkbox-field-wrap">
+                            <span class="checkbox-image-active"></span>
+                            <span class="checkbox-image-unactive" style="display: none"></span>
+                            <input class="checkbox-field" type="checkbox" checked/>
+                        </label>
+                    </td>
+                    <td>Гостиница</td>
+                </tr>
+
+
+
+                <tr>
+                    <td>
+                        <label class="checkbox-field-wrap">
+                            <span class="checkbox-image-active"></span>
+                            <span class="checkbox-image-unactive" style="display: none"></span>
+                            <input class="checkbox-field" type="checkbox" checked/>
+                        </label>
+                    </td>
+                    <td>Мероприятие</td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <label class="checkbox-field-wrap">
+                            <span class="checkbox-image-active"></span>
+                            <span class="checkbox-image-unactive" style="display: none"></span>
+                            <input class="checkbox-field" type="checkbox" checked/>
+                        </label>
+                    </td>
+                    <td>Статус sms-уведомления</td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <label class="checkbox-field-wrap">
+                            <span class="checkbox-image-active"></span>
+                            <span class="checkbox-image-unactive" style="display: none"></span>
+                            <input class="checkbox-field" type="checkbox" checked/>
+                        </label>
+                    </td>
+                    <td>Статус e-mail уведомления</td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <label class="checkbox-field-wrap">
+                            <span class="checkbox-image-active"></span>
+                            <span class="checkbox-image-unactive" style="display: none"></span>
+                            <input class="checkbox-field" type="checkbox" checked/>
+                        </label>
+                    </td>
+                    <td>Категория участника</td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <label class="checkbox-field-wrap">
+                            <span class="checkbox-image-active"></span>
+                            <span class="checkbox-image-unactive" style="display: none"></span>
+                            <input class="checkbox-field" type="checkbox" checked/>
+                        </label>
+                    </td>
+                    <td>Дата прибытия</td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <label class="checkbox-field-wrap">
+                            <span class="checkbox-image-active"></span>
+                            <span class="checkbox-image-unactive" style="display: none"></span>
+                            <input class="checkbox-field" type="checkbox" checked/>
+                        </label>
+                    </td>
+                    <td>Дата убытия</td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <label class="checkbox-field-wrap">
+                            <span class="checkbox-image-active"></span>
+                            <span class="checkbox-image-unactive" style="display: none"></span>
+                            <input class="checkbox-field" type="checkbox" checked/>
+                        </label>
+                    </td>
+                    <td>Информация по трансферу</td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <label class="checkbox-field-wrap">
+                            <span class="checkbox-image-active"></span>
+                            <span class="checkbox-image-unactive" style="display: none"></span>
+                            <input class="checkbox-field" type="checkbox" checked/>
+                        </label>
+                    </td>
+                    <td>Примечания оператора регистратора</td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <label class="checkbox-field-wrap">
+                            <span class="checkbox-image-active"></span>
+                            <span class="checkbox-image-unactive" style="display: none"></span>
+                            <input class="checkbox-field" type="checkbox" checked/>
+                        </label>
+                    </td>
+                    <td>Примечания оператора деловой части</td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <label class="checkbox-field-wrap">
+                            <span class="checkbox-image-active"></span>
+                            <span class="checkbox-image-unactive" style="display: none"></span>
+                            <input class="checkbox-field" type="checkbox" checked/>
+                        </label>
+                    </td>
+                    <td>Статус расселения</td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <label class="checkbox-field-wrap">
+                            <span class="checkbox-image-active"></span>
+                            <span class="checkbox-image-unactive" style="display: none"></span>
+                            <input class="checkbox-field" type="checkbox" checked/>
+                        </label>
+                    </td>
+                    <td>Время и дата регистрации</td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <label class="checkbox-field-wrap">
+                            <span class="checkbox-image-active"></span>
+                            <span class="checkbox-image-unactive" style="display: none"></span>
+                            <input class="checkbox-field" type="checkbox" checked/>
+                        </label>
+                    </td>
+                    <td>Статус регистрации</td>
+                </tr>
+
+
+            </table>
+            <label class="submit-field-wrap">
+                <input class="submit-field" type="submit" value="Применить"/>
+            </label>
+            <label class="reset-field-wrap">
+                <input class="reset-field" type="reset" value="Сброс"/>
+            </label>
+        </form>
+    </div>
+</div>
+
+<footer></footer>
+
+</body>
+</html>

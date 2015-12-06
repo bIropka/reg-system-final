@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Authorization</title>
+    <link rel="stylesheet" href="css/styles.css"/>
+    <script src="js/jquery-2.1.4.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('.checkbox-field-wrap').bind('change', checkboxEvent);
+            function checkboxEvent() {
+                if($(this).find('.checkbox-field').prop('checked')){
+                    $(this).find('.checkbox-image-active').css('display', 'inline-block');
+                    $(this).find('.checkbox-image-unactive').css('display', 'none');
+                } else {
+                    $(this).find('.checkbox-image-active').css('display', 'none');
+                    $(this).find('.checkbox-image-unactive').css('display', 'inline-block');
+                }
+            }
+        });
+    </script>
+</head>
+<body>
+
+<header>
+    <div class="header-content">
+        <div class="logo">
+            <img src="images/logo.png" alt="logo"/>
+        </div>
+        <nav>
+            <ul class="main-menu">
+                <li class="menu-main-home"><a href="index.html">Главная</a></li>
+                <li class="menu-main-events">Мероприятия
+                    <ul class="menu-events sub-menu">
+                        <li class="menu-events-event1"><a href="event-statistics-table.html">Мероприятие 1</a></li>
+                        <li class="menu-events-event2"><a href="event-statistics-table.html">Мероприятие 2</a></li>
+                        <li class="menu-events-event3"><a href="event-statistics-table.html">Мероприятие 3</a></li>
+                    </ul>
+                </li>
+                <li class="menu-main-control">Управление
+                    <ul class="menu-control sub-menu">
+                        <li class="menu-control-users"><a href="control-users.html">Пользователи</a></li>
+                        <li class="menu-control-events"><a href="control-event.html">Мероприятие</a></li>
+                        <li class="menu-control-history"><a href="control-history.html">История изменений</a></li>
+                    </ul>
+                </li>
+                <li class="main-menu-account">Профиль</li>
+            </ul>
+        </nav>
+        <a class="log-in" href="authorization.html">Вход</a>
+    </div>
+</header>
+
+<div class="main-block">
+
+    <ul class="breadcrumbs">
+        <li><a href="index.html">Главная</a><span class="delimiter">&#8194;&#62;&#8194;</span></li>
+        <li><a href="authorization.html">Авторизация</a><span class="delimiter">&#8194;&#62;&#8194;</span></li>
+    </ul>
+
+    <form class="form-authorization" action="#">
+        <div class="title">вход в личный кабинет по e-mail адресу и паролю</div>
+        <label class="email-field-wrap">
+            <span class="field-title">E-mail</span>
+            <input class="email-field" type="email"/>
+        </label>
+        <label class="password-field-wrap">
+            <span class="field-title">Пароль</span>
+            <input class="password-field" type="password"/>
+        </label>
+        <label class="checkbox-field-wrap">
+            <span class="checkbox-image-active"></span>
+            <span class="checkbox-image-unactive" style="display: none"></span>
+            <input class="checkbox-field" type="checkbox" checked/>
+            <span class="field-title">Запомнить меня</span>
+        </label>
+        <a class="forget-password" href="#">Забыли пароль?</a>
+        <label class="submit-field-wrap">
+            <input class="submit-field" type="submit" value="Войти"/>
+        </label>
+    </form>
+
+</div>
+
+<footer></footer>
+
+</body>
+</html>

@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Main</title>
+    <link rel="stylesheet" href="css/styles.css"/>
+    <script src="js/jquery-2.1.4.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            var searchField = $('.search-field');
+            searchField.bind('focus',function(){
+                $('.loupe-image').css('display', 'none');
+            });
+            searchField.bind("focusout",function(){
+                $('.loupe-image').css('display', 'inline-block');
+            });
+         /***********************************************************************/
+            $('.subject').click(function () {
+                $('.window-participants-list').fadeIn();
+            });
+            $('.window-participants-list').click(function (event) {
+                $target = $(event.target);
+                if (!$target.closest($('.form-participants-list')).length) $('.window-participants-list').fadeOut();
+                if ($target.hasClass('close-window')) $('.window-participants-list').fadeOut();
+            });
+        /***********************************************************************/
+            $('.choose-speakers').click(function () {
+                $('.window-choose-speakers').fadeIn();
+            });
+            $('.window-choose-speakers').click(function (event) {
+                $target = $(event.target);
+                if (!$target.closest($('.form-choose-speakers')).length) $('.window-choose-speakers').fadeOut();
+                if ($target.hasClass('close-window')) $('.window-choose-speakers').fadeOut();
+            });
+        /********************************************************************************/
+            var checkboxWrap = $('.checkbox-field-wrap');
+            function choicesCounter() {
+                var counter = 0;
+                $('.checkbox-field').each(function(i, elem){
+                    if($(elem).prop('checked') == true){
+                        counter++;
+                    }
+                });
+                return counter;
+            }
+            checkboxWrap.bind('change', checkboxEvent);
+            function checkboxEvent() {
+                if($(this).find('.checkbox-field').prop('checked')){
+                    if(choicesCounter() < 4){
+                        $(this).find('.checkbox-image-active').css('display', 'inline-block');
+                        $(this).find('.checkbox-image-unactive').css('display', 'none');
+                    } else {
+                        $(this).find('.checkbox-field').prop('checked', false);
+                    }
+                } else {
+                    $(this).find('.checkbox-image-active').css('display', 'none');
+                    $(this).find('.checkbox-image-unactive').css('display', 'inline-block');
+                }
+            }
+        /********************************************************************************/
+            var chooseSpeackerForm = $('.form-choose-speakers');
+            $('.reset-field').click(function(){
+                $(chooseSpeackerForm).find('.checkbox-image-active').css('display', 'none');
+                $(chooseSpeackerForm).find('.checkbox-image-unactive').css('display', 'inline-block');
+                $(chooseSpeackerForm).find('checkbox-field').prop('checked', false);
+
+            });
+        });
+    </script>
+</head>
+<body>
+
+<header>
+    <div class="header-content">
+        <div class="logo">
+            <img src="images/logo.png" alt="logo"/>
+        </div>
+        <nav>
+            <ul class="main-menu">
+                <li class="menu-main-home" ><a href="index.html">Главная</a></li>
+                <li class="menu-main-events">Мероприятия
+                    <ul class="menu-events sub-menu">
+                        <li class="menu-events-event1"><a href="event-statistics-table.html">Мероприятие 1</a></li>
+                        <li class="menu-events-event2"><a href="event-statistics-table.html">Мероприятие 2</a></li>
+                        <li class="menu-events-event3"><a href="event-statistics-table.html">Мероприятие 3</a></li>
+                    </ul>
+                </li>
+                <li class="menu-main-control">Управление
+                    <ul class="menu-control sub-menu">
+                        <li class="menu-control-users"><a href="control-users.html">Пользователи</a></li>
+                        <li class="menu-control-events"><a href="control-event.html">Мероприятие</a></li>
+                        <li class="menu-control-history"><a href="control-history.html">История изменений</a></li>
+                    </ul>
+                </li>
+                <li class="main-menu-account">Профиль</li>
+            </ul>
+        </nav>
+        <a class="log-in" href="authorization.html">Вход</a>
+    </div>
+</header>
+
+<div class="main-block">
+
+    <ul class="breadcrumbs">
+        <li><a href="index.html">Главная</a><span class="delimiter">&#8194;&#62;&#8194;</span></li>
+        <li><a href="#">Мероприятие 1</a><span class="delimiter">&#8194;&#62;&#8194;</span></li>
+        <li><a href="event-program.html">Программа</a><span class="delimiter">&#8194;&#62;&#8194;</span></li>
+    </ul>
+
+    <div class="event-menu">
+        <ul>
+            <li><a class="event-menu-choice" href="event-statistics-table.html">Статистика</a></li>
+            <li><a class="event-menu-choice" href="event-participants.html">Участники</a></li>
+            <li><a class="event-menu-choice" href="event-mailing.html">Рассылка</a></li>
+            <li><a class="event-menu-choice" href="event-registration.html">Регистрация участников</a></li>
+            <li><a class="event-menu-choice" href="event-program.html" style="background: linear-gradient(to bottom, #fe8900, #c56c04);">Программа</a></li>
+            <li class="event-control"><span class="event-menu-choice">Управление</span>
+                <ul class="sub-menu">
+                    <li class="event-control-hotels"><a href="event-control-hotels.html">Список гостиниц</a></li>
+                    <li class="event-control-users"><a href="event-control-users.html">Список пользователей</a></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+
+    <div class="table-control event-big">
+        <label class="select-filter-wrap">
+            <span class="select-title">Фильтр</span>
+            <span class="mark">&#9660;</span>
+            <select class="select-filter">
+                <option value="show-all" selected="selected">Все</option>
+                <option value="round-tables">По круглым столам</option>
+            </select>
+        </label>
+        <label class="search-field-wrap">
+            <span class="field-title">Поиск:</span>
+            <span class="loupe-image"></span>
+            <input class="search-field" type="search"/>
+        </label>
+        <label class="select-period-wrap">
+            <span class="select-title">Период:</span>
+            <span class="mark">&#9660;</span>
+            <select class="select-period">
+                <option value="week" selected="selected">Неделя</option>
+                <option value="today">Сегодня</option>
+                <option value="month">Месяц</option>
+                <option value="all-time">Все время</option>
+            </select>
+        </label>
+        <a class="download-image" href="example.file" download></a>
+    </div>
+
+    <form action="#" class="event-program-form">
+        <table class="event-program-table">
+
+            <tr>
+                <th>трек форума</th>
+                <th>ответственное лицо</th>
+                <th>дата и время</th>
+                <th>название программы</th>
+                <th>продолжительность</th>
+                <th>спикер</th>
+                <th>примечание</th>
+            </tr>
+
+            <tr>
+                <td>1</td>
+                <td></td>
+                <td>
+                    <span class="list-image"></span>
+                    <span class="date">10.09.2015</span>
+                    <span class="time">12:00</span>
+                </td>
+                <td><span class="subject">Бизнес-аналитика</span></td>
+                <td>1 час</td>
+                <td><span class="choose-speakers">выбрать</span></td>
+                <td></td>
+            </tr>
+
+            <tr>
+                <td>1</td>
+                <td></td>
+                <td>
+                    <span class="list-image"></span>
+                    <span class="date">10.09.2015</span>
+                    <span class="time">12:00</span>
+                </td>
+                <td><span class="subject">Бизнес-аналитика</span></td>
+                <td>1 час</td>
+                <td><span class="choose-speakers">выбрать</span></td>
+                <td></td>
+            </tr>
+
+            <tr>
+                <td>1</td>
+                <td></td>
+                <td>
+                    <span class="list-image"></span>
+                    <span class="date">10.09.2015</span>
+                    <span class="time">12:00</span>
+                </td>
+                <td><span class="subject">Бизнес-аналитика</span></td>
+                <td>1 час</td>
+                <td><span class="choose-speakers">выбрать</span></td>
+                <td></td>
+            </tr>
+
+            <tr>
+                <td>1</td>
+                <td></td>
+                <td>
+                    <span class="list-image"></span>
+                    <span class="date">10.09.2015</span>
+                    <span class="time">12:00</span>
+                </td>
+                <td><span class="subject">Бизнес-аналитика</span></td>
+                <td>1 час</td>
+                <td><span class="choose-speakers">выбрать</span></td>
+                <td></td>
+            </tr>
+
+        </table>
+        <input type="submit" class="submit-field" value="Добавить"/>
+    </form>
+
+    <div class="window-participants-list">
+        <div class="participants-list-wrap">
+            <div class="form-title">
+                <span class="title">Список участников</span>
+                <span class="close-window">&#10006;</span>
+            </div>
+            <ul>
+                <li>Петров И.В.</li>
+                <li>Сидоров Л.М.</li>
+                <li>Москвин Л.С.</li>
+                <li>Вариков А.В.</li>
+                <li>Каримов В.В.</li>
+                <li>Москвин Л.С.</li>
+                <li>Вариков А.В.</li>
+                <li>Каримов В.В.</li>
+                <li>Москвин Л.С.</li>
+                <li>Вариков А.В.</li>
+                <li>Каримов В.В.</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="window-choose-speakers">
+        <form action="#" class="form-choose-speakers"  onsubmit="return false">
+            <div class="form-title">
+                <span class="title">Выбор спикера</span>
+                <label class="search-field-wrap">
+                    <span class="loupe-image"></span>
+                    <input class="search-field" type="search" placeholder="Поиск:"/>
+                </label>
+                <span class="close-window">&#10006;</span>
+            </div>
+
+            <table>
+                <tr>
+                    <td>Петров И.В.</td>
+                    <td>
+                        <label class="checkbox-field-wrap">
+                            <span class="checkbox-image-active" style="display: none"></span>
+                            <span class="checkbox-image-unactive"></span>
+                            <input class="checkbox-field" type="checkbox"/>
+                        </label>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Сидоров Л.М.</td>
+                    <td>
+                        <label class="checkbox-field-wrap">
+                            <span class="checkbox-image-active" style="display: none"></span>
+                            <span class="checkbox-image-unactive"></span>
+                            <input class="checkbox-field" type="checkbox"/>
+                        </label>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Москвин Л.С.</td>
+                    <td>
+                        <label class="checkbox-field-wrap">
+                            <span class="checkbox-image-active" style="display: none"></span>
+                            <span class="checkbox-image-unactive"></span>
+                            <input class="checkbox-field" type="checkbox"/>
+                        </label>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Вариков А.В.</td>
+                    <td>
+                        <label class="checkbox-field-wrap">
+                            <span class="checkbox-image-active" style="display: none"></span>
+                            <span class="checkbox-image-unactive"></span>
+                            <input class="checkbox-field" type="checkbox"/>
+                        </label>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Каримов В.В.</td>
+                    <td>
+                        <label class="checkbox-field-wrap">
+                            <span class="checkbox-image-active" style="display: none"></span>
+                            <span class="checkbox-image-unactive"></span>
+                            <input class="checkbox-field" type="checkbox"/>
+                        </label>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Петров И.В.</td>
+                    <td>
+                        <label class="checkbox-field-wrap">
+                            <span class="checkbox-image-active" style="display: none"></span>
+                            <span class="checkbox-image-unactive"></span>
+                            <input class="checkbox-field" type="checkbox"/>
+                        </label>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Сидоров Л.М.</td>
+                    <td>
+                        <label class="checkbox-field-wrap">
+                            <span class="checkbox-image-active" style="display: none"></span>
+                            <span class="checkbox-image-unactive"></span>
+                            <input class="checkbox-field" type="checkbox"/>
+                        </label>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Москвин Л.С.</td>
+                    <td>
+                        <label class="checkbox-field-wrap">
+                            <span class="checkbox-image-active" style="display: none"></span>
+                            <span class="checkbox-image-unactive"></span>
+                            <input class="checkbox-field" type="checkbox"/>
+                        </label>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Вариков А.В.</td>
+                    <td>
+                        <label class="checkbox-field-wrap">
+                            <span class="checkbox-image-active" style="display: none"></span>
+                            <span class="checkbox-image-unactive"></span>
+                            <input class="checkbox-field" type="checkbox"/>
+                        </label>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Каримов В.В.</td>
+                    <td>
+                        <label class="checkbox-field-wrap">
+                            <span class="checkbox-image-active" style="display: none"></span>
+                            <span class="checkbox-image-unactive"></span>
+                            <input class="checkbox-field" type="checkbox"/>
+                        </label>
+                    </td>
+                </tr>
+
+            </table>
+            <label class="submit-field-wrap">
+                <input class="submit-field" type="submit" value="Сохранить"/>
+            </label>
+            <label class="reset-field-wrap">
+                <input class="reset-field" type="reset" value="Отмена"/>
+            </label>
+        </form>
+    </div>
+
+</div>
+
+<footer></footer>
+
+</body>
+</html>

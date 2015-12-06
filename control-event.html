@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Control-events</title>
+    <link href="css/jquery-ui.min.css" rel="stylesheet">
+    <link href="css/styles.css" rel="stylesheet">
+    <script src="js/jquery-2.1.4.min.js"></script>
+    <script src="js/jquery-ui.min.js"></script>
+    <script>
+        $(document).ready(function () {
+        /**********************************************************************/
+            var searchField = $('.search-field');
+            searchField.bind('focus',function(){
+                $('.loupe-image').css('display', 'none');
+            });
+            searchField.bind("focusout",function(){
+                $('.loupe-image').css('display', 'inline-block');
+            });
+        /**********************************************************************/
+            $('.checkbox-field-wrap').bind('change', checkboxEvent);
+            function checkboxEvent() {
+                if($(this).find('.checkbox-field').prop('checked')){
+                    $(this).find('.checkbox-image-active').css('display', 'inline-block');
+                    $(this).find('.checkbox-image-unactive').css('display', 'none');
+                } else {
+                    $(this).find('.checkbox-image-active').css('display', 'none');
+                    $(this).find('.checkbox-image-unactive').css('display', 'inline-block');
+                }
+            }
+        /***********************************************************************/
+            $('.add-new-event').click(function () {
+                $('.window-add-event').fadeIn();
+            });
+            $('.window-add-event').click(function (event) {
+                $target = $(event.target);
+                if (!$target.closest($('.form-add-event')).length) $('.window-add-event').fadeOut();
+                if ($target.hasClass('close-window')) $('.window-add-event').fadeOut();
+            });
+        /***********************************************************************/
+            $('.note-image').click(function () {
+                $('.window-update-event').fadeIn();
+            });
+            $('.window-update-event').click(function (event) {
+                $target = $(event.target);
+                if (!$target.closest($('.form-update-event')).length) $('.window-update-event').fadeOut();
+                if ($target.hasClass('close-window')) $('.window-update-event').fadeOut();
+            });
+        /*************************************************************************/
+            var dates = $(".date-from, .date-to").datepicker({
+                dayNamesMin: ['ВС', 'ПН', 'ВТ', 'СР', 'ЧТ', 'ПТ', 'СБ'],
+                monthNames: ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'],
+                defaultDate: "+1w",
+                changeMonth: false,
+                onSelect: function(selectedDate){
+                    var option = this.id == "from" ? "minDate" : "maxDate",
+                            instance = $( this ).data( "datepicker" ),
+                            date = $.datepicker.parseDate(
+                                    instance.settings.dateFormat || $.datepicker._defaults.dateFormat,
+                                    selectedDate, instance.settings);
+                    dates.not(this).datepicker("option", option, date);
+                }
+            });
+        });
+    </script>
+</head>
+<body>
+
+<header>
+    <div class="header-content">
+        <div class="logo">
+            <img src="images/logo.png" alt="logo"/>
+        </div>
+        <nav>
+            <ul class="main-menu">
+                <li class="menu-main-home"><a href="index.html">Главная</a></li>
+                <li class="menu-main-events">Мероприятия
+                    <ul class="menu-events sub-menu">
+                        <li class="menu-events-event1"><a href="event-statistics-table.html">Мероприятие 1</a></li>
+                        <li class="menu-events-event2"><a href="event-statistics-table.html">Мероприятие 2</a></li>
+                        <li class="menu-events-event3"><a href="event-statistics-table.html">Мероприятие 3</a></li>
+                    </ul>
+                </li>
+                <li class="menu-main-control">Управление
+                    <ul class="menu-control sub-menu">
+                        <li class="menu-control-users"><a href="control-users.html">Пользователи</a></li>
+                        <li class="menu-control-events"><a href="control-event.html">Мероприятие</a></li>
+                        <li class="menu-control-history"><a href="control-history.html">История изменений</a></li>
+                    </ul>
+                </li>
+                <li class="main-menu-account">Профиль</li>
+            </ul>
+        </nav>
+        <a class="log-in" href="authorization.html">Вход</a>
+    </div>
+</header>
+
+<div class="main-block">
+
+    <ul class="breadcrumbs">
+        <li><a href="index.html">Главная</a><span class="delimiter">&#8194;&#62;&#8194;</span></li>
+        <li><a href="#">Управление</a><span class="delimiter">&#8194;&#62;&#8194;</span></li>
+        <li><a href="control-event.html">Мероприятие</a><span class="delimiter">&#8194;&#62;&#8194;</span></li>
+    </ul>
+
+    <button class="add-new-event">создать мероприятие&#8194;&#8194;&#8194;&#9660;</button>
+
+    <div class="table-control">
+        <label class="select-filter-wrap">
+            <span class="select-title">Фильтр</span>
+            <span class="mark">&#9660;</span>
+            <select class="select-filter">
+                <option value="show-all" selected="selected">Все&#8194;(5)</option>
+                <option value="round-tables">По круглым столам</option>
+            </select>
+        </label>
+        <label class="search-field-wrap">
+            <span class="field-title">Поиск:</span>
+            <span class="loupe-image"></span>
+            <input class="search-field" type="search"/>
+        </label>
+        <div class="clearfix"></div>
+    </div>
+
+    <table class="control-events-table">
+        <tr>
+            <th>действие</th>
+            <th>название</th>
+            <th>место проведения</th>
+            <th>дата добавления</th>
+            <th>дата начала</th>
+            <th>завершение</th>
+            <th>активен</th>
+        </tr>
+        <tr>
+            <td>
+                <div class="note-image"></div>
+            </td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>
+                <label class="checkbox-field-wrap">
+                    <span class="checkbox-image-active" style="display: none"></span>
+                    <span class="checkbox-image-unactive"></span>
+                    <input class="checkbox-field" type="checkbox"/>
+                </label>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <div class="note-image"></div>
+            </td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>
+                <label class="checkbox-field-wrap">
+                    <span class="checkbox-image-active" style="display: none"></span>
+                    <span class="checkbox-image-unactive"></span>
+                    <input class="checkbox-field" type="checkbox"/>
+                </label>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <div class="note-image"></div>
+            </td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>
+                <label class="checkbox-field-wrap">
+                    <span class="checkbox-image-active" style="display: none"></span>
+                    <span class="checkbox-image-unactive"></span>
+                    <input class="checkbox-field" type="checkbox"/>
+                </label>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <div class="note-image"></div>
+            </td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>
+                <label class="checkbox-field-wrap">
+                    <span class="checkbox-image-active" style="display: none"></span>
+                    <span class="checkbox-image-unactive"></span>
+                    <input class="checkbox-field" type="checkbox"/>
+                </label>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <div class="note-image"></div>
+            </td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>
+                <label class="checkbox-field-wrap">
+                    <span class="checkbox-image-active" style="display: none"></span>
+                    <span class="checkbox-image-unactive"></span>
+                    <input class="checkbox-field" type="checkbox"/>
+                </label>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <div class="note-image"></div>
+            </td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>
+                <label class="checkbox-field-wrap">
+                    <span class="checkbox-image-active" style="display: none"></span>
+                    <span class="checkbox-image-unactive"></span>
+                    <input class="checkbox-field" type="checkbox"/>
+                </label>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <div class="note-image"></div>
+            </td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>
+                <label class="checkbox-field-wrap">
+                    <span class="checkbox-image-active" style="display: none"></span>
+                    <span class="checkbox-image-unactive"></span>
+                    <input class="checkbox-field" type="checkbox"/>
+                </label>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <div class="note-image"></div>
+            </td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>
+                <label class="checkbox-field-wrap">
+                    <span class="checkbox-image-active" style="display: none"></span>
+                    <span class="checkbox-image-unactive"></span>
+                    <input class="checkbox-field" type="checkbox"/>
+                </label>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <div class="note-image"></div>
+            </td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>
+                <label class="checkbox-field-wrap">
+                    <span class="checkbox-image-active" style="display: none"></span>
+                    <span class="checkbox-image-unactive"></span>
+                    <input class="checkbox-field" type="checkbox"/>
+                </label>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <div class="note-image"></div>
+            </td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>
+                <label class="checkbox-field-wrap">
+                    <span class="checkbox-image-active" style="display: none"></span>
+                    <span class="checkbox-image-unactive"></span>
+                    <input class="checkbox-field" type="checkbox"/>
+                </label>
+            </td>
+        </tr>
+    </table>
+
+    <div class="window-add-event">
+        <form class="form-add-event" action="#">
+            <div class="form-title">
+                <span class="title">Создать мероприятие</span>
+                <span class="close-window">&#10006;</span>
+            </div>
+            <label class="name-field-wrap">
+                <span class="field-title">Название</span>
+                <input class="name-field" type="text"/>
+            </label>
+            <label class="place-field-wrap">
+                <span class="field-title">Место проведения</span>
+                <input class="place-field" type="text"/>
+            </label>
+            <label class="date-field-wrap">
+                <span class="field-title">Дата начала мероприятия</span>
+                <input class="date-field date-from" type="text"/>
+            </label>
+            <label class="date-field-wrap">
+                <span class="field-title">Дата окончания мероприятия</span>
+                <input class="date-field date-to" type="text"/>
+            </label>
+            <label class="submit-field-wrap">
+                <input class="submit-field" type="submit" value="Добавить"/>
+            </label>
+        </form>
+    </div>
+    <div class="window-update-event">
+        <form class="form-update-event" action="#">
+            <div class="form-title">
+                <span class="title">Редактировать мероприятие</span>
+                <span class="close-window">&#10006;</span>
+            </div>
+            <label class="name-field-wrap">
+                <span class="field-title">Название</span>
+                <input class="name-field" type="text"/>
+            </label>
+            <label class="place-field-wrap">
+                <span class="field-title">Место проведения</span>
+                <input class="place-field" type="text"/>
+            </label>
+            <label class="date-field-wrap">
+                <span class="field-title">Дата начала мероприятия</span>
+                <input class="date-field date-from" type="text"/>
+            </label>
+            <label class="date-field-wrap">
+                <span class="field-title">Дата окончания мероприятия</span>
+                <input class="date-field date-to" type="text"/>
+            </label>
+            <label class="submit-field-wrap">
+                <input class="submit-field" type="submit" value="Сохранить"/>
+            </label>
+        </form>
+    </div>
+
+</div>
+
+<footer></footer>
+
+</body>
+</html>
