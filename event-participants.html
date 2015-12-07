@@ -73,6 +73,29 @@
                 if (!$target.closest($('.form-choose-fields')).length) $('.window-choose-fields').fadeOut();
                 if ($target.hasClass('close-window')) $('.window-choose-fields').fadeOut();
             });
+            /********************************************************************************/
+            $('.form-choose-fields').find('.submit-field').click(function(){
+                var tableWidth = 0;
+                $('.form-choose-fields').find($(checkboxWrap)).each(function(i, elem){
+                    if(!$(elem).hasClass('main-checkbox')){
+                        if($(elem).find('.checkbox-field').prop('checked') == false){
+                            $('.for-participants').find('th:nth-child(' + (i + 2) + ')').css('display', 'none');
+                            $('.for-participants').find('td:nth-child(' + (i + 2) + ')').css('display', 'none');
+                        }
+                        if($(elem).find('.checkbox-field').prop('checked')) {
+                            $('.for-participants').find('th:nth-child(' + (i + 2) + ')').css('display', 'table-cell');
+                            $('.for-participants').find('td:nth-child(' + (i + 2) + ')').css('display', 'table-cell');
+                            tableWidth += parseInt($('.for-participants').find('th:nth-child(' + i + ')').css('width'));
+                        }
+                    }
+                });
+                $('.for-participants').css('width', tableWidth + 310);
+            });
+            /*************************************************************************************/
+            $('.form-choose-fields').find('.reset-field').click(function(){
+                checkboxWrap.find('.checkbox-image-active').css('display', 'none');
+                checkboxWrap.find('.checkbox-image-unactive').css('display', 'inline-block');
+            });
         });
     </script>
 </head>
@@ -158,7 +181,7 @@
         <a class="download-image" href="example.file" download></a>
     </div>
 
-    <form action="#" class="event-big-form" style="width: 2700px">
+    <form action="#" class="event-big-form for-participants">
 
         <div class="event-big-table-wrap">
 

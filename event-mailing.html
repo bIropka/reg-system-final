@@ -25,13 +25,9 @@
                 if($(this).find('.checkbox-field').prop('checked')){
                     $(this).find('.checkbox-image-active').css('display', 'inline-block');
                     $(this).find('.checkbox-image-unactive').css('display', 'none');
-                    if(!$(this).hasClass('main-checkbox')){
-                        $(this).parents('tr').css('opacity', '0.5');
-                    }
                 } else {
                     $(this).find('.checkbox-image-active').css('display', 'none');
                     $(this).find('.checkbox-image-unactive').css('display', 'inline-block');
-                    $(this).parents('tr').css('opacity', '1');
                 }
             }
         /********************************************************************************/
@@ -41,23 +37,22 @@
                     checkboxWrap.find('.checkbox-image-active').css('display', 'inline-block');
                     checkboxWrap.find('.checkbox-image-unactive').css('display', 'none');
                     checkboxWrap.find('.checkbox-field').prop('checked', true);
-                    $('tr').css('opacity', '0.5');
-                    $('tr:first-child').css('opacity', '1');
                 } else {
                     checkboxWrap.find('.checkbox-image-active').css('display', 'none');
                     checkboxWrap.find('.checkbox-image-unactive').css('display', 'inline-block');
                     checkboxWrap.find('.checkbox-field').prop('checked', false);
-                    $('tr').css('opacity', '1');
                 }
             }
         /********************************************************************************/
-            $('.detail-image').click(function(){
-                if(mainCheckbox.css('display') === 'none'){
-                    checkboxWrap.css('display', 'inline-block');
-                    checkboxWrap.find('.checkbox-image-unactive').css('display', 'inline-block');
-                    checkboxWrap.find('.checkbox-image-active').css('display', 'none');
+            $('.note-image').click(function(){
+                if($(this).hasClass('.active')){
+                    $(this).removeClass('.active');
+                    $(this).parents('tr').find('.event-field').prop('disabled', true).css('border', '1px solid transparent');
+                    $(this).css('border', '1px solid transparent');
                 } else {
-                    checkboxWrap.css('display', 'none');
+                    $(this).addClass('.active');
+                    $(this).parents('tr').find('.event-field').prop('disabled', false).css('border', '1px solid #ff8a00');
+                    $(this).css('border', '1px solid #ff8a00');
                 }
             });
         /***********************************************************************/
@@ -84,15 +79,37 @@
                 maxDate: "+1y",
                 changeMonth: false
             });
-        /***************************************************************************/
-            $('.note-image').click(function(){
-                if($(this).hasClass('.active')){
-                    $(this).removeClass('.active');
-                    $(this).parents('tr').find('.event-field').prop('disabled', true).css('border', '1px solid transparent');
-                } else {
-                    $(this).addClass('.active');
-                    $(this).parents('tr').find('.event-field').prop('disabled', false).css('border', '1px solid red');
-                }
+            /***********************************************************************/
+            $('.detail-image').click(function () {
+                $('.window-choose-fields').fadeIn();
+            });
+            $('.window-choose-fields').click(function (event) {
+                $target = $(event.target);
+                if (!$target.closest($('.form-choose-fields')).length) $('.window-choose-fields').fadeOut();
+                if ($target.hasClass('close-window')) $('.window-choose-fields').fadeOut();
+            });
+            /********************************************************************************/
+            $('.form-choose-fields').find('.submit-field').click(function(){
+                var tableWidth = 0;
+                $('.form-choose-fields').find($(checkboxWrap)).each(function(i, elem){
+                    if(!$(elem).hasClass('main-checkbox')){
+                        if($(elem).find('.checkbox-field').prop('checked') == false){
+                            $('.for-mailing').find('th:nth-child(' + (i + 2) + ')').css('display', 'none');
+                            $('.for-mailing').find('td:nth-child(' + (i + 2) + ')').css('display', 'none');
+                        }
+                        if($(elem).find('.checkbox-field').prop('checked')) {
+                            $('.for-mailing').find('th:nth-child(' + (i + 2) + ')').css('display', 'table-cell');
+                            $('.for-mailing').find('td:nth-child(' + (i + 2) + ')').css('display', 'table-cell');
+                            tableWidth += parseInt($('.for-mailing').find('th:nth-child(' + i + ')').css('width'));
+                        }
+                    }
+                });
+                $('.for-mailing').css('width', tableWidth + 310);
+            });
+            /*************************************************************************************/
+            $('.form-choose-fields').find('.reset-field').click(function(){
+                checkboxWrap.find('.checkbox-image-active').css('display', 'none');
+                checkboxWrap.find('.checkbox-image-unactive').css('display', 'inline-block');
             });
         /******************************************************************************/
            $('.speed-choose label').click(function(){
@@ -186,7 +203,7 @@
         <a class="download-image" href="example.file" download></a>
     </div>
 
-    <form action="#" class="event-big-form">
+    <form action="#" class="event-big-form for-mailing">
 
         <div class="event-big-table-wrap">
 
@@ -200,7 +217,7 @@
             <table class="event-big-table">
                 <tr>
                     <th>
-                        <label class="checkbox-field-wrap main-checkbox" style="display: none">
+                        <label class="checkbox-field-wrap main-checkbox">
                             <span class="checkbox-image-active" style="display: none"></span>
                             <span class="checkbox-image-unactive"></span>
                             <input class="checkbox-field" type="checkbox"/>
@@ -229,7 +246,7 @@
                 <tr>
                     <td>
                         <div style="height:1px;opacity: 0;"></div>
-                        <label class="checkbox-field-wrap" style="display: none">
+                        <label class="checkbox-field-wrap">
                             <span class="checkbox-image-active" style="display: none"></span>
                             <span class="checkbox-image-unactive"></span>
                             <input class="checkbox-field" type="checkbox"/>
@@ -354,7 +371,7 @@
                 <tr>
                     <td>
                         <div style="height:1px;opacity: 0;"></div>
-                        <label class="checkbox-field-wrap" style="display: none">
+                        <label class="checkbox-field-wrap">
                             <span class="checkbox-image-active" style="display: none"></span>
                             <span class="checkbox-image-unactive"></span>
                             <input class="checkbox-field" type="checkbox"/>
@@ -479,7 +496,7 @@
                 <tr>
                     <td>
                         <div style="height:1px;opacity: 0;"></div>
-                        <label class="checkbox-field-wrap" style="display: none">
+                        <label class="checkbox-field-wrap">
                             <span class="checkbox-image-active" style="display: none"></span>
                             <span class="checkbox-image-unactive"></span>
                             <input class="checkbox-field" type="checkbox"/>
@@ -604,7 +621,7 @@
                 <tr>
                     <td>
                         <div style="height:1px;opacity: 0;"></div>
-                        <label class="checkbox-field-wrap" style="display: none">
+                        <label class="checkbox-field-wrap">
                             <span class="checkbox-image-active" style="display: none"></span>
                             <span class="checkbox-image-unactive"></span>
                             <input class="checkbox-field" type="checkbox"/>
@@ -804,6 +821,223 @@
                     <input name="speed" type="radio" value="2min"/>3 минуты
                 </label>
             </div>
+        </form>
+    </div>
+
+    <div class="window-choose-fields">
+        <form action="#" class="form-choose-fields">
+            <div class="form-title">
+                <span class="title">Показать поля</span>
+                <span class="close-window">&#10006;</span>
+            </div>
+            <table class="fields-table">
+                <tr>
+                    <th>
+                        <label class="checkbox-field-wrap main-checkbox">
+                            <span class="checkbox-image-active"></span>
+                            <span class="checkbox-image-unactive" style="display: none"></span>
+                            <input class="checkbox-field" type="checkbox" checked/>
+                        </label>
+                    </th>
+                    <th>элемент</th>
+                </tr>
+
+                <tr>
+                    <td>
+                        <label class="checkbox-field-wrap">
+                            <span class="checkbox-image-active"></span>
+                            <span class="checkbox-image-unactive" style="display: none"></span>
+                            <input class="checkbox-field" type="checkbox" checked/>
+                        </label>
+                    </td>
+                    <td>Номер</td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <label class="checkbox-field-wrap">
+                            <span class="checkbox-image-active"></span>
+                            <span class="checkbox-image-unactive" style="display: none"></span>
+                            <input class="checkbox-field" type="checkbox" checked/>
+                        </label>
+                    </td>
+                    <td>ФИО</td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <label class="checkbox-field-wrap">
+                            <span class="checkbox-image-active"></span>
+                            <span class="checkbox-image-unactive" style="display: none"></span>
+                            <input class="checkbox-field" type="checkbox" checked/>
+                        </label>
+                    </td>
+                    <td>Организация</td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <label class="checkbox-field-wrap">
+                            <span class="checkbox-image-active"></span>
+                            <span class="checkbox-image-unactive" style="display: none"></span>
+                            <input class="checkbox-field" type="checkbox" checked/>
+                        </label>
+                    </td>
+                    <td>Должность</td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <label class="checkbox-field-wrap">
+                            <span class="checkbox-image-active"></span>
+                            <span class="checkbox-image-unactive" style="display: none"></span>
+                            <input class="checkbox-field" type="checkbox" checked/>
+                        </label>
+                    </td>
+                    <td>E-mail</td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <label class="checkbox-field-wrap">
+                            <span class="checkbox-image-active"></span>
+                            <span class="checkbox-image-unactive" style="display: none"></span>
+                            <input class="checkbox-field" type="checkbox" checked/>
+                        </label>
+                    </td>
+                    <td>Телефон мобильный</td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <label class="checkbox-field-wrap">
+                            <span class="checkbox-image-active"></span>
+                            <span class="checkbox-image-unactive" style="display: none"></span>
+                            <input class="checkbox-field" type="checkbox" checked/>
+                        </label>
+                    </td>
+                    <td>Гостиница</td>
+                </tr>
+
+
+
+                <tr>
+                    <td>
+                        <label class="checkbox-field-wrap">
+                            <span class="checkbox-image-active"></span>
+                            <span class="checkbox-image-unactive" style="display: none"></span>
+                            <input class="checkbox-field" type="checkbox" checked/>
+                        </label>
+                    </td>
+                    <td>Мероприятие</td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <label class="checkbox-field-wrap">
+                            <span class="checkbox-image-active"></span>
+                            <span class="checkbox-image-unactive" style="display: none"></span>
+                            <input class="checkbox-field" type="checkbox" checked/>
+                        </label>
+                    </td>
+                    <td>Статус sms-уведомления</td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <label class="checkbox-field-wrap">
+                            <span class="checkbox-image-active"></span>
+                            <span class="checkbox-image-unactive" style="display: none"></span>
+                            <input class="checkbox-field" type="checkbox" checked/>
+                        </label>
+                    </td>
+                    <td>Статус e-mail уведомления</td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <label class="checkbox-field-wrap">
+                            <span class="checkbox-image-active"></span>
+                            <span class="checkbox-image-unactive" style="display: none"></span>
+                            <input class="checkbox-field" type="checkbox" checked/>
+                        </label>
+                    </td>
+                    <td>Категория участника</td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <label class="checkbox-field-wrap">
+                            <span class="checkbox-image-active"></span>
+                            <span class="checkbox-image-unactive" style="display: none"></span>
+                            <input class="checkbox-field" type="checkbox" checked/>
+                        </label>
+                    </td>
+                    <td>Дата прибытия</td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <label class="checkbox-field-wrap">
+                            <span class="checkbox-image-active"></span>
+                            <span class="checkbox-image-unactive" style="display: none"></span>
+                            <input class="checkbox-field" type="checkbox" checked/>
+                        </label>
+                    </td>
+                    <td>Дата убытия</td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <label class="checkbox-field-wrap">
+                            <span class="checkbox-image-active"></span>
+                            <span class="checkbox-image-unactive" style="display: none"></span>
+                            <input class="checkbox-field" type="checkbox" checked/>
+                        </label>
+                    </td>
+                    <td>Информация по трансферу</td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <label class="checkbox-field-wrap">
+                            <span class="checkbox-image-active"></span>
+                            <span class="checkbox-image-unactive" style="display: none"></span>
+                            <input class="checkbox-field" type="checkbox" checked/>
+                        </label>
+                    </td>
+                    <td>Примечания оператора регистратора</td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <label class="checkbox-field-wrap">
+                            <span class="checkbox-image-active"></span>
+                            <span class="checkbox-image-unactive" style="display: none"></span>
+                            <input class="checkbox-field" type="checkbox" checked/>
+                        </label>
+                    </td>
+                    <td>Примечания оператора деловой части</td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <label class="checkbox-field-wrap">
+                            <span class="checkbox-image-active"></span>
+                            <span class="checkbox-image-unactive" style="display: none"></span>
+                            <input class="checkbox-field" type="checkbox" checked/>
+                        </label>
+                    </td>
+                    <td>Статус расселения</td>
+                </tr>
+
+            </table>
+            <label class="submit-field-wrap">
+                <input class="submit-field" type="submit" value="Применить"/>
+            </label>
+            <label class="reset-field-wrap">
+                <input class="reset-field" type="reset" value="Сброс"/>
+            </label>
         </form>
     </div>
 
