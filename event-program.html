@@ -26,6 +26,7 @@
         /***********************************************************************/
             $('.choose-speakers').click(function () {
                 $('.window-choose-speakers').fadeIn();
+                $(this).addClass('waiting');
             });
             $('.window-choose-speakers').click(function (event) {
                 $target = $(event.target);
@@ -94,6 +95,20 @@
                         whiteCell = !whiteCell;
                     }
                 });
+            });
+        /**************************************************************************************/
+            $('.form-choose-speakers .submit-field').click(function() {
+                var speakersList = '';
+                $('.form-choose-speakers').find('.checkbox-field').each(function(i, elem) {
+                    if($(elem).prop('checked')){
+                        var thisSpeaker = $(elem).parents('tr').find('td:first-child').html();
+                        speakersList += thisSpeaker + ', ';
+                    }
+                });
+                $('.event-program-table .waiting').html(speakersList.substring(0, speakersList.length - 2));
+                $('.event-program-table .waiting').css('text-decoration','none').css('font-style','normal').css('color','black');
+                $('.event-program-table .waiting').removeClass('waiting');
+                $('.window-choose-speakers').fadeOut();
             });
         });
     </script>
@@ -288,7 +303,6 @@
             </tr>
 
         </table>
-        <input type="submit" class="submit-field" value="Добавить"/>
     </form>
 
     <div class="window-participants-list">
