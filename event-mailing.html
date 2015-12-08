@@ -19,7 +19,7 @@
 
             var checkboxWrap = $('.checkbox-field-wrap');
             var mainCheckbox = $('.main-checkbox');
-        /********************************************************************************/
+            /********************************************************************************/
             checkboxWrap.bind('change', checkboxEvent);
             function checkboxEvent() {
                 if($(this).find('.checkbox-field').prop('checked')){
@@ -30,17 +30,18 @@
                     $(this).find('.checkbox-image-unactive').css('display', 'inline-block');
                 }
             }
-        /********************************************************************************/
+            /********************************************************************************/
             mainCheckbox.bind('change', mainCheckboxEvent);
             function mainCheckboxEvent() {
                 if($(this).find('.checkbox-field').prop('checked')){
-                    checkboxWrap.find('.checkbox-image-active').css('display', 'inline-block');
-                    checkboxWrap.find('.checkbox-image-unactive').css('display', 'none');
-                    checkboxWrap.find('.checkbox-field').prop('checked', true);
+                    $(this).parents('table').find('.checkbox-image-active').css('display', 'inline-block');
+                    $(this).parents('table').find('.checkbox-image-unactive').css('display', 'none');
+                    $(this).parents('table').find('.checkbox-field').prop('checked', true);
+
                 } else {
-                    checkboxWrap.find('.checkbox-image-active').css('display', 'none');
-                    checkboxWrap.find('.checkbox-image-unactive').css('display', 'inline-block');
-                    checkboxWrap.find('.checkbox-field').prop('checked', false);
+                    $(this).parents('table').find('.checkbox-image-active').css('display', 'none');
+                    $(this).parents('table').find('.checkbox-image-unactive').css('display', 'inline-block');
+                    $(this).parents('table').find('.checkbox-field').prop('checked', false);
                 }
             }
         /********************************************************************************/
@@ -89,10 +90,10 @@
                 if ($target.hasClass('close-window')) $('.window-choose-fields').fadeOut();
             });
             /********************************************************************************/
-            $('.form-choose-fields').find('.submit-field').click(function(){
+            $('.form-choose-fields .submit-field').click(function(){
                 var tableWidth = 0;
                 $('.form-choose-fields').find($(checkboxWrap)).each(function(i, elem){
-                    if(!$(elem).hasClass('main-checkbox')){
+                    if(i > 0){
                         if($(elem).find('.checkbox-field').prop('checked') == false){
                             $('.for-mailing').find('th:nth-child(' + (i + 2) + ')').css('display', 'none');
                             $('.for-mailing').find('td:nth-child(' + (i + 2) + ')').css('display', 'none');
@@ -107,9 +108,10 @@
                 $('.for-mailing').css('width', tableWidth + 310);
             });
             /*************************************************************************************/
-            $('.form-choose-fields').find('.reset-field').click(function(){
-                checkboxWrap.find('.checkbox-image-active').css('display', 'none');
-                checkboxWrap.find('.checkbox-image-unactive').css('display', 'inline-block');
+            $('.window-choose-fields .reset-field').click(function(){
+                $('.window-choose-fields').find('.checkbox-field').prop('checked', false);
+                $('.window-choose-fields').find('.checkbox-image-active').css('display', 'none');
+                $('.window-choose-fields').find('.checkbox-image-unactive').css('display', 'inline-block');
             });
         /******************************************************************************/
            $('.speed-choose label').click(function(){
@@ -824,7 +826,7 @@
     </div>
 
     <div class="window-choose-fields">
-        <form action="#" class="form-choose-fields">
+        <form action="#" class="form-choose-fields"  onsubmit="return false">
             <div class="form-title">
                 <span class="title">Показать поля</span>
                 <span class="close-window">&#10006;</span>
@@ -1034,9 +1036,7 @@
             <label class="submit-field-wrap">
                 <input class="submit-field" type="submit" value="Применить"/>
             </label>
-            <label class="reset-field-wrap">
-                <input class="reset-field" type="reset" value="Сброс"/>
-            </label>
+            <button class="reset-field">Сброс</button>
         </form>
     </div>
 

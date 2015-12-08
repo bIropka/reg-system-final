@@ -94,11 +94,11 @@ button, input[type="submit"], input[type="reset"] {
 button:hover, input[type="submit"]:hover {
     background: linear-gradient(to top, #fe8900, #c56c04);
 }
-input[type="reset"] {
+.reset-field {
     background: linear-gradient(to bottom, #fefefe, #eae9e9);
     color: black;
 }
-input[type="reset"]:hover {
+.reset-field:hover {
     background: linear-gradient(to top, #fefefe, #d3d2d2);
 }
 textarea {
@@ -1387,16 +1387,13 @@ nav {
     text-align: left;
 }
 .fields-table-wrap .submit-field-wrap,
-.fields-table-wrap .reset-field-wrap {
+.fields-table-wrap .reset-field {
     display: inline-block;
     width: 30%;
     margin: 3% 5% 3% 0;
 }
 .fields-table-wrap .reset-field {
-    display: inline-block;
-    width: 100%;
     color: black;
-    margin: 0;
 }
 /*********************************/
 .display-table-wrap {
