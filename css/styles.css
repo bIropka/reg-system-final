@@ -1458,6 +1458,7 @@ nav {
 }
 .event-program-form td {
     height: 100px;
+    position: relative;
 }
 
 .event-program-form th:nth-child(1) {width: 5%;}
@@ -1471,14 +1472,21 @@ nav {
 .list-image {
     width: 25px;
     height: 25px;
-    vertical-align: middle;
+    position: absolute;
+    left: 10px;
+    top: 35px;
     cursor: pointer;
 }
 .event-program-form .date,
 .event-program-form .time {
     display: inline-block;
-    vertical-align: top;
-    margin-top: -3px;
+    float: none;
+    position: absolute;
+    left: 40px;
+    top: 30px;
+}
+.event-program-form .time {
+    top: 55px;
 }
 .event-program-form .time {
     margin-top: -8px;

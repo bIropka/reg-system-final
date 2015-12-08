@@ -65,6 +65,36 @@
                 $(chooseSpeackerForm).find('checkbox-field').prop('checked', false);
 
             });
+        /********************************************************************************/
+            $('.list-image').click(function () {
+                var thisDate = $(this).parent('td').find('.date').html();
+                if($(this).hasClass('furled')){
+                    $(this).removeClass('furled');
+                    $('.event-program-table .date').each(function(i, elem){
+                        if($(elem).html() == thisDate){
+                            $(elem).parents('tr').css('display', 'table-row');
+                        }
+                    });
+                } else {
+                    $(this).addClass('furled');
+                    $('.event-program-table .date').each(function(i, elem){
+                        if($(elem).html() == thisDate && !$(elem).parent('td').children().hasClass('list-image')){
+                            $(elem).parents('tr').css('display', 'none');
+                        }
+                    });
+                }
+                // decorate table
+                var whiteCell = false;
+                $('.event-program-table tr').css('background', '#eeeeee');
+                $('.event-program-table tr').each(function(i, elem){
+                    if($(this).css('display') != 'none'){
+                        if (whiteCell) {
+                            $(this).css('background', 'white');
+                        }
+                        whiteCell = !whiteCell;
+                    }
+                });
+            });
         });
     </script>
 </head>
@@ -181,9 +211,48 @@
                 <td>1</td>
                 <td></td>
                 <td>
-                    <span class="list-image"></span>
                     <span class="date">10.09.2015</span>
+                    <span class="time">15:00</span>
+                </td>
+                <td><span class="subject">Бизнес-аналитика</span></td>
+                <td>1 час</td>
+                <td><span class="choose-speakers">выбрать</span></td>
+                <td></td>
+            </tr>
+
+            <tr>
+                <td>45</td>
+                <td></td>
+                <td>
+                    <span class="list-image"></span>
+                    <span class="date">11.09.2015</span>
                     <span class="time">12:00</span>
+                </td>
+                <td><span class="subject">Бизнес-аналитика</span></td>
+                <td>1 час</td>
+                <td><span class="choose-speakers">выбрать</span></td>
+                <td></td>
+            </tr>
+
+            <tr>
+                <td>56</td>
+                <td></td>
+                <td>
+                    <span class="date">11.09.2015</span>
+                    <span class="time">15:00</span>
+                </td>
+                <td><span class="subject">Бизнес-аналитика</span></td>
+                <td>1 час</td>
+                <td><span class="choose-speakers">выбрать</span></td>
+                <td></td>
+            </tr>
+
+            <tr>
+                <td>56</td>
+                <td></td>
+                <td>
+                    <span class="date">11.09.2015</span>
+                    <span class="time">19:00</span>
                 </td>
                 <td><span class="subject">Бизнес-аналитика</span></td>
                 <td>1 час</td>
@@ -196,7 +265,7 @@
                 <td></td>
                 <td>
                     <span class="list-image"></span>
-                    <span class="date">10.09.2015</span>
+                    <span class="date">12.09.2015</span>
                     <span class="time">12:00</span>
                 </td>
                 <td><span class="subject">Бизнес-аналитика</span></td>
@@ -209,9 +278,8 @@
                 <td>1</td>
                 <td></td>
                 <td>
-                    <span class="list-image"></span>
-                    <span class="date">10.09.2015</span>
-                    <span class="time">12:00</span>
+                    <span class="date">12.09.2015</span>
+                    <span class="time">17:00</span>
                 </td>
                 <td><span class="subject">Бизнес-аналитика</span></td>
                 <td>1 час</td>
