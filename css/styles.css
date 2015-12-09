@@ -1477,29 +1477,102 @@ nav {
     top: 35px;
     cursor: pointer;
 }
-.event-program-form .date,
-.event-program-form .time {
+.event-program-form .program-date,
+.event-program-form .program-time {
     display: inline-block;
+    width: 80px;
     float: none;
     position: absolute;
     left: 40px;
     top: 30px;
+    border: 1px solid transparent;
+    background-color: transparent;
+    cursor: pointer;
 }
-.event-program-form .time {
+.event-program-form .program-date:focus,
+.event-program-form .program-time:focus {
+    border: 1px solid #ff8a00;
+}
+.event-program-form .program-time {
     top: 55px;
 }
-.event-program-form .time {
+.event-program-form .program-time {
     margin-top: -8px;
 }
 .event-program-form .subject {
     text-decoration: underline;
     cursor: pointer;
 }
+.event-program-form .program-field {
+    background-color: transparent;
+    cursor: pointer;
+    border: 1px solid transparent;
+}
+.event-program-form .program-field:focus {
+    border: 1px solid #ff8a00;
+}
 .event-program-form .choose-speakers {
     font-style: italic;
     color: #6e7176;
     cursor: pointer;
     text-decoration: underline;
+}
+.add-program {
+
+}
+/*********************************/
+.window-add-program {
+    position: fixed;
+    height: 100%;
+    width: 100%;
+    left: 0;
+    top: 0;
+    background: rgba(0,0,0,0.5);
+    display: none;
+    text-align: left;
+}
+.form-add-program {
+    position: absolute;
+    width: 320px;
+    height: 480px;
+    margin: auto;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    background: #ffffff;
+    border: 1px solid #9b9c9e;
+    outline: 10px solid #32343a;
+    overflow: auto;
+}
+.form-add-program .field-wrap,
+.form-add-program .field-date-wrap,
+.form-add-program .field-time-wrap{
+    display: inline-block;
+    width: 90%;
+    margin: 3% 0 0 5%;
+}
+.form-add-program .field-date-wrap,
+.form-add-program .field-time-wrap{
+    width: 40%;
+}
+.form-add-program .field {
+    display: inline-block;
+    padding: 5px 10px;
+    width: 100%;
+}
+.form-add-program .program-date,
+.form-add-program .program-time {
+    display: inline-block;
+    width: 100%;
+}
+.event-program-form .add-program,
+.form-add-program .submit-field {
+    padding: 3px 15px;
+    margin-top: 15px;
+}
+.form-add-program .submit-field {
+    margin-left: 5%;
 }
 /*********************************/
 .window-participants-list {

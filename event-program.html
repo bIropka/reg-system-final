@@ -2,9 +2,14 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <title>Main</title>
+    <title>Event program</title>
+    <link href="css/jquery-ui.min.css" rel="stylesheet"/>
     <link rel="stylesheet" href="css/styles.css"/>
+    <link rel="stylesheet" href="css/jquery-ui.min.css"/>
+    <link rel="stylesheet" href="css/timepicker-ui.min.css"/>
     <script src="js/jquery-2.1.4.min.js"></script>
+    <script src="js/jquery-ui.min.js"></script>
+    <script src="js/timepicker-ui.min.js"></script>
     <script>
         $(document).ready(function () {
             var searchField = $('.search-field');
@@ -13,6 +18,15 @@
             });
             searchField.bind("focusout",function(){
                 $('.loupe-image').css('display', 'inline-block');
+            });
+            /***********************************************************************/
+            $('.add-program').click(function () {
+                $('.window-add-program').fadeIn();
+            });
+            $('.window-add-program').click(function (event) {
+                $target = $(event.target);
+                if (!$target.closest($('.form-add-program')).length) $('.window-add-program').fadeOut();
+                if ($target.hasClass('close-window')) $('.window-add-program').fadeOut();
             });
          /***********************************************************************/
             $('.subject').click(function () {
@@ -68,18 +82,18 @@
             });
         /********************************************************************************/
             $('.list-image').click(function () {
-                var thisDate = $(this).parent('td').find('.date').html();
+                var thisDate = $(this).parent('td').find('.program-date').val();
                 if($(this).hasClass('furled')){
                     $(this).removeClass('furled');
-                    $('.event-program-table .date').each(function(i, elem){
-                        if($(elem).html() == thisDate){
+                    $('.event-program-table .program-date').each(function(i, elem){
+                        if($(elem).val() === thisDate){
                             $(elem).parents('tr').css('display', 'table-row');
                         }
                     });
                 } else {
                     $(this).addClass('furled');
-                    $('.event-program-table .date').each(function(i, elem){
-                        if($(elem).html() == thisDate && !$(elem).parent('td').children().hasClass('list-image')){
+                    $('.event-program-table .program-date').each(function(i, elem){
+                        if($(elem).val() === thisDate && !$(elem).parent('td').children().hasClass('list-image')){
                             $(elem).parents('tr').css('display', 'none');
                         }
                     });
@@ -125,6 +139,15 @@
                 }
                 decorateTable();
             }
+        /*************************************************************************/
+           $('.program-date').datepicker({
+                dayNamesMin: ['ВС', 'ПН', 'ВТ', 'СР', 'ЧТ', 'ПТ', 'СБ'],
+                monthNames: ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'],
+                defaultDate: "+1w",
+                changeMonth: false,
+                dateFormat: "dd.mm.yy",
+            });
+            $('.program-time').timePicker();
         });
     </script>
 </head>
@@ -224,113 +247,115 @@
             </tr>
 
             <tr>
-                <td>1</td>
-                <td>Иванов И.И.</td>
+                <td><label><textarea class="program-field" cols="" rows="1">1</textarea></label></td>
+                <td><label><textarea class="program-field" cols="" rows="1">Иванов И.И.</textarea></label></td>
                 <td>
                     <span class="list-image"></span>
-                    <span class="date">10.09.2015</span>
-                    <span class="time">12:00</span>
+                    <input type="text" class="program-date" value="10.09.2015">
+                    <input type="text" class="program-time" value="12:00">
                 </td>
                 <td><span class="subject">Регистрация участников и открытие выставки</span></td>
-                <td>1 час</td>
+                <td><label><textarea class="program-field" cols="" rows="1">1 час</textarea></label></td>
                 <td><span class="choose-speakers">выбрать</span></td>
-                <td></td>
+                <td><label><textarea class="program-field" cols="" rows="3"></textarea></label></td>
             </tr>
 
             <tr>
-                <td>1</td>
-                <td>Петров П.П.</td>
+                <td><label><textarea class="program-field" cols="" rows="1">1</textarea></label></td>
+                <td><label><textarea class="program-field" cols="" rows="1">Петров П.П.</textarea></label></td>
                 <td>
-                    <span class="date">10.09.2015</span>
-                    <span class="time">15:00</span>
+                    <input type="text" class="program-date" value="10.09.2015">
+                    <input type="text" class="program-time" value="15:00">
                 </td>
                 <td><span class="subject">Обход выставки. Презентация новых моделей автомобилей LADA на стенде AVTOVAZ</span></td>
-                <td>1 час</td>
+                <td><label><textarea class="program-field" cols="" rows="1">1 час</textarea></label></td>
                 <td><span class="choose-speakers">выбрать</span></td>
-                <td></td>
+                <td><label><textarea class="program-field" cols="" rows="3"></textarea></label></td>
             </tr>
 
             <tr>
-                <td>45</td>
-                <td>Сидоров С.С.</td>
+                <td><label><textarea class="program-field" cols="" rows="1">45</textarea></label></td>
+                <td><label><textarea class="program-field" cols="" rows="1">Сидоров С.С.</textarea></label></td>
                 <td>
                     <span class="list-image"></span>
-                    <span class="date">11.09.2015</span>
-                    <span class="time">12:00</span>
+                    <input type="text" class="program-date" value="11.09.2015">
+                    <input type="text" class="program-time" value="12:00">
                 </td>
                 <td><span class="subject">Экологически чистый автомобиль. Технология, инфраструктура, пользователь</span></td>
-                <td>1 час</td>
+                <td><label><textarea class="program-field" cols="" rows="1">1 час</textarea></label></td>
                 <td><span class="choose-speakers">выбрать</span></td>
-                <td></td>
+                <td><label><textarea class="program-field" cols="" rows="3"></textarea></label></td>
             </tr>
 
             <tr>
-                <td>56</td>
-                <td>Семенов С.С.</td>
+                <td><label><textarea class="program-field" cols="" rows="1">56</textarea></label></td>
+                <td><label><textarea class="program-field" cols="" rows="1">Семенов С.С.</textarea></label></td>
                 <td>
-                    <span class="date">11.09.2015</span>
-                    <span class="time">15:00</span>
+                    <input type="text" class="program-date" value="11.09.2015">
+                    <input type="text" class="program-time" value="15:00">
                 </td>
                 <td><span class="subject">Перерыв</span></td>
-                <td>1 час</td>
+                <td><label><textarea class="program-field" cols="" rows="1">1 час</textarea></label></td>
                 <td><span class="choose-speakers">выбрать</span></td>
-                <td></td>
+                <td><label><textarea class="program-field" cols="" rows="3"></textarea></label></td>
             </tr>
 
             <tr>
-                <td>56</td>
-                <td>Григорьев Г.Г.</td>
+                <td><label><textarea class="program-field" cols="" rows="1">56</textarea></label></td>
+                <td><label><textarea class="program-field" cols="" rows="1">Григорьев Г.Г.</textarea></label></td>
                 <td>
-                    <span class="date">11.09.2015</span>
-                    <span class="time">19:00</span>
+                    <input type="text" class="program-date" value="11.09.2015">
+                    <input type="text" class="program-time" value="19:00">
                 </td>
                 <td><span class="subject">Бизнес-аналитика</span></td>
-                <td>1 час</td>
+                <td><label><textarea class="program-field" cols="" rows="1">1 час</textarea></label></td>
                 <td><span class="choose-speakers">выбрать</span></td>
-                <td></td>
+                <td><label><textarea class="program-field" cols="" rows="3"></textarea></label></td>
             </tr>
 
             <tr>
-                <td>1</td>
-                <td>Егоров Е.Е.</td>
+                <td><label><textarea class="program-field" cols="" rows="1">1</textarea></label></td>
+                <td><label><textarea class="program-field" cols="" rows="1">Егоров Е.Е.</textarea></label></td>
                 <td>
                     <span class="list-image"></span>
-                    <span class="date">12.09.2015</span>
-                    <span class="time">12:00</span>
+                    <input type="text" class="program-date" value="12.09.2015">
+                    <input type="text" class="program-time" value="12:00">
                 </td>
                 <td><span class="subject">Регистрация участников и открытие выставки- "Экологически чистый автомобиль"</span></td>
-                <td>1 час</td>
+                <td><label><textarea class="program-field" cols="" rows="1">1 час</textarea></label></td>
                 <td><span class="choose-speakers">выбрать</span></td>
-                <td></td>
+                <td><label><textarea class="program-field" cols="" rows="3"></textarea></label></td>
             </tr>
 
             <tr>
-                <td>1</td>
-                <td>Юрьев Ю.Ю.</td>
+                <td><label><textarea class="program-field" cols="" rows="1">1</textarea></label></td>
+                <td><label><textarea class="program-field" cols="" rows="1">Юрьев Ю.Ю.</textarea></label></td>
                 <td>
-                    <span class="date">12.09.2015</span>
-                    <span class="time">17:00</span>
+                    <input type="text" class="program-date" value="12.09.2015">
+                    <input type="text" class="program-time" value="17:00">
                 </td>
                 <td><span class="subject">Обход выставки "Экологически чистый автомобиль"</span></td>
-                <td>1 час</td>
+                <td><label><textarea class="program-field" cols="" rows="1">1 час</textarea></label></td>
                 <td><span class="choose-speakers">выбрать</span></td>
-                <td></td>
+                <td><label><textarea class="program-field" cols="" rows="3"></textarea></label></td>
             </tr>
 
             <tr class="round-table">
-                <td>1</td>
-                <td>Степанов С.С.</td>
+                <td><label><textarea class="program-field" cols="" rows="1">1</textarea></label></td>
+                <td><label><textarea class="program-field" cols="" rows="1">Степанов С.С.</textarea></label></td>
                 <td>
-                    <span class="date">13.09.2015</span>
-                    <span class="time">12:00</span>
+                    <input type="text" class="program-date" value="13.09.2015">
+                    <input type="text" class="program-time" value="12:00">
                 </td>
                 <td><span class="subject">Реинжиниринг и модернизация предприятий в период снижения продаж</span></td>
-                <td>1 час</td>
+                <td><label><textarea class="program-field" cols="" rows="1">1 час</textarea></label></td>
                 <td><span class="choose-speakers">выбрать</span></td>
-                <td>планируется круглый стол</td>
+                <td><label><textarea class="program-field" cols="" rows="3">планируется круглый стол</textarea></label></td>
             </tr>
 
         </table>
+
+        <button class="add-program">Добавить</button>
     </form>
 
     <div class="window-participants-list">
@@ -474,6 +499,50 @@
             </label>
             <label class="reset-field-wrap">
                 <input class="reset-field" type="reset" value="Отмена"/>
+            </label>
+        </form>
+    </div>
+
+    <div class="window-add-program">
+        <form class="form-add-program" action="#">
+            <div class="form-title">
+                <span class="title">Добавить мероприятие</span>
+                <span class="close-window">&#10006;</span>
+            </div>
+            <label class="field-wrap">
+                <span class="field-title">Трек форума</span>
+                <input class="field" type="text"/>
+            </label>
+            <label class="field-wrap">
+                <span class="field-title">Ответственное лицо</span>
+                <input class="field" type="text"/>
+            </label>
+            <label class="field-date-wrap">
+                <span class="field-title">Дата</span><br>
+                <input class="program-date" type="text"/>
+            </label>
+            <label class="field-time-wrap">
+                <span class="field-title">Время</span><br>
+                <input class="program-time" type="text"/>
+            </label>
+            <label class="field-wrap">
+                <span class="field-title">Название программы</span>
+                <input class="field" type="text"/>
+            </label>
+            <label class="field-wrap">
+                <span class="field-title">Продолжительность</span>
+                <input class="field" type="text"/>
+            </label>
+            <label class="field-wrap">
+                <span class="field-title">Спикер</span>
+                <input class="field" type="text"/>
+            </label>
+            <label class="field-wrap">
+                <span class="field-title">Примечание</span>
+                <input class="field" type="text"/>
+            </label>
+            <label class="submit-field-wrap">
+                <input class="submit-field" type="submit" value="Сохранить"/>
             </label>
         </form>
     </div>
