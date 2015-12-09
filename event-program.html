@@ -84,7 +84,10 @@
                         }
                     });
                 }
-                // decorate table
+                decorateTable();
+            });
+            // decorate table
+            function decorateTable(){
                 var whiteCell = false;
                 $('.event-program-table tr').css('background', '#eeeeee');
                 $('.event-program-table tr').each(function(i, elem){
@@ -95,7 +98,7 @@
                         whiteCell = !whiteCell;
                     }
                 });
-            });
+            }
         /**************************************************************************************/
             $('.form-choose-speakers .submit-field').click(function() {
                 var speakersList = '';
@@ -110,6 +113,18 @@
                 $('.event-program-table .waiting').removeClass('waiting');
                 $('.window-choose-speakers').fadeOut();
             });
+        /**************************************************************************************/
+            $('.select-filter').bind('change', filterEvent);
+            function filterEvent() {
+                if($('.select-filter :selected').val() === 'round-tables'){
+                    $('.event-program-form tr').css('display','none');
+                    $('.event-program-form tr:first-child').css('display','table-row');
+                    $('.event-program-form .round-table').css('display','table-row');
+                } else {
+                    $('.event-program-form tr').css('display','table-row');
+                }
+                decorateTable();
+            }
         });
     </script>
 </head>
@@ -210,13 +225,13 @@
 
             <tr>
                 <td>1</td>
-                <td></td>
+                <td>Иванов И.И.</td>
                 <td>
                     <span class="list-image"></span>
                     <span class="date">10.09.2015</span>
                     <span class="time">12:00</span>
                 </td>
-                <td><span class="subject">Бизнес-аналитика</span></td>
+                <td><span class="subject">Регистрация участников и открытие выставки</span></td>
                 <td>1 час</td>
                 <td><span class="choose-speakers">выбрать</span></td>
                 <td></td>
@@ -224,12 +239,12 @@
 
             <tr>
                 <td>1</td>
-                <td></td>
+                <td>Петров П.П.</td>
                 <td>
                     <span class="date">10.09.2015</span>
                     <span class="time">15:00</span>
                 </td>
-                <td><span class="subject">Бизнес-аналитика</span></td>
+                <td><span class="subject">Обход выставки. Презентация новых моделей автомобилей LADA на стенде AVTOVAZ</span></td>
                 <td>1 час</td>
                 <td><span class="choose-speakers">выбрать</span></td>
                 <td></td>
@@ -237,13 +252,13 @@
 
             <tr>
                 <td>45</td>
-                <td></td>
+                <td>Сидоров С.С.</td>
                 <td>
                     <span class="list-image"></span>
                     <span class="date">11.09.2015</span>
                     <span class="time">12:00</span>
                 </td>
-                <td><span class="subject">Бизнес-аналитика</span></td>
+                <td><span class="subject">Экологически чистый автомобиль. Технология, инфраструктура, пользователь</span></td>
                 <td>1 час</td>
                 <td><span class="choose-speakers">выбрать</span></td>
                 <td></td>
@@ -251,12 +266,12 @@
 
             <tr>
                 <td>56</td>
-                <td></td>
+                <td>Семенов С.С.</td>
                 <td>
                     <span class="date">11.09.2015</span>
                     <span class="time">15:00</span>
                 </td>
-                <td><span class="subject">Бизнес-аналитика</span></td>
+                <td><span class="subject">Перерыв</span></td>
                 <td>1 час</td>
                 <td><span class="choose-speakers">выбрать</span></td>
                 <td></td>
@@ -264,7 +279,7 @@
 
             <tr>
                 <td>56</td>
-                <td></td>
+                <td>Григорьев Г.Г.</td>
                 <td>
                     <span class="date">11.09.2015</span>
                     <span class="time">19:00</span>
@@ -277,13 +292,13 @@
 
             <tr>
                 <td>1</td>
-                <td></td>
+                <td>Егоров Е.Е.</td>
                 <td>
                     <span class="list-image"></span>
                     <span class="date">12.09.2015</span>
                     <span class="time">12:00</span>
                 </td>
-                <td><span class="subject">Бизнес-аналитика</span></td>
+                <td><span class="subject">Регистрация участников и открытие выставки- "Экологически чистый автомобиль"</span></td>
                 <td>1 час</td>
                 <td><span class="choose-speakers">выбрать</span></td>
                 <td></td>
@@ -291,15 +306,28 @@
 
             <tr>
                 <td>1</td>
-                <td></td>
+                <td>Юрьев Ю.Ю.</td>
                 <td>
                     <span class="date">12.09.2015</span>
                     <span class="time">17:00</span>
                 </td>
-                <td><span class="subject">Бизнес-аналитика</span></td>
+                <td><span class="subject">Обход выставки "Экологически чистый автомобиль"</span></td>
                 <td>1 час</td>
                 <td><span class="choose-speakers">выбрать</span></td>
                 <td></td>
+            </tr>
+
+            <tr class="round-table">
+                <td>1</td>
+                <td>Степанов С.С.</td>
+                <td>
+                    <span class="date">13.09.2015</span>
+                    <span class="time">12:00</span>
+                </td>
+                <td><span class="subject">Реинжиниринг и модернизация предприятий в период снижения продаж</span></td>
+                <td>1 час</td>
+                <td><span class="choose-speakers">выбрать</span></td>
+                <td>планируется круглый стол</td>
             </tr>
 
         </table>
